@@ -1,14 +1,22 @@
-### 1. GET alle attraktioner (Virker i browser + HTTP-fil)
+### Hent alle attraktioner (GET)
 GET http://localhost:8080/attractions
 
-### 2. GET specifik attraktion (Virker i browser + HTTP-fil)
+###
+
+### Søg efter en specifik attraktion (GET)
 GET http://localhost:8080/attractions/Tivoli
 
-### 3. POST tilføj attraktion (Virker KUN i HTTP-fil/Postman)
-POST http://localhost:8080/attractions/add?name=Legoland&description=Forlystelsespark%20i%20Billund
+###
 
-### 4. POST opdater attraktion
-POST http://localhost:8080/attractions/update?pick=1&name=Legoland&newname=Legoland%20Billund&newdescription=Opdateret%20beskrivelse
+### Tilføj en ny attraktion (POST)
+POST http://localhost:8080/attractions/add?id=3&name=Rundetaarn&description=Et%20hoejt%20taarn
 
-### 5. POST slet attraktion
-POST http://localhost:8080/attractions/delete/Bakken
+###
+
+### Opdater en attraktion (POST)
+POST http://localhost:8080/attractions/update?pick=1&name=Rundetaarn&newname=Rundetaarn%20Kbh&newdescription=Nyt%20taarn
+
+###
+
+### Slet en attraktion (POST)
+POST http://localhost:8080/attractions/delete/Rundetaarn

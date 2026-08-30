@@ -1,11 +1,14 @@
 package tourism.tourism.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.service.TouristService;
 
-@Controller
+import java.util.List;
+
+@RestController // Brug @RestController i stedet for @Controller ved string/JSON endpoints
 @RequestMapping("attractions")
 public class TouristController {
 
@@ -15,48 +18,63 @@ public class TouristController {
         this.touristService = touristService;
     }
 
-    // 1. GET /attractions
     @GetMapping
-
     public ResponseEntity<String> getAllAttractions() {
+        List<TouristAttraction> attractions = touristService.getAllAttractions();
 
-        return touristService.displayAttractions();
+        if (attractions.isEmpty()) {
+            return new ResponseEntity<>("Ingen attraktioner fundet i systemet.", HttpStatus.OK);
+        }
 
+        StringBuilder result = new StringBuilder();
+        for (TouristAttraction item : attractions) {
+            result.append(item.toString()).append("\n");
+        }
+
+        return new ResponseEntity<>(result.toString(), HttpStatus.OK);
     }
 
-    // 2. GET /attractions/{name}
-    @GetMapping("/{name}") // Bruger @PathVariable for at fange navnet direkte i stien
+    @GetMapping("/{name}")
     public ResponseEntity<String> searchAttraction(@PathVariable String name) {
-        return touristService.searchAttraction(name);
+        TouristAttraction item = touristService.getAttractionByName(name);
+        if (item != null) {
+            return new ResponseEntity<>(item.toString(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
     }
-   // same as the one above but search bar friendly
-   @GetMapping("/search")
-   public ResponseEntity<String> executeSearch(@RequestParam("query") String name) {
-       // Forwards the query directly to your service
-       return touristService.searchAttraction(name);
-   }
 
-    // 3. POST /attractions/add
+    @GetMapping("/search")
+    public ResponseEntity<String> executeSearch(@RequestParam("query") String name) {
+        return searchAttraction(name);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<String> addAttraction(@RequestParam int id, @RequestParam String name, @RequestParam String description) {
-        //change this so that its auto incrementing and not manuel.
-        return touristService.addAttraction(id,name, description);
+        touristService.addAttraction(id, name, description);
+        return new ResponseEntity<>("Attraktion tilføjet: " + name, HttpStatus.CREATED);
     }
 
-    // 4. POST /attractions/update
-    @PostMapping("/update") // Ændret fra PUT til POST så det matcher billedet
+    @PostMapping("/update")
     public ResponseEntity<String> updateAttraction(
             @RequestParam int pick,
             @RequestParam String name,
             @RequestParam String newname,
             @RequestParam String newdescription) {
-        return touristService.updateAttraction(pick, name, newname, newdescription);
+
+        boolean updated = touristService.updateAttraction(pick, name, newname, newdescription);
+        if (updated) {
+            return new ResponseEntity<>("Attraktion opdateret", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Kunne ikke opdatere attraktion", HttpStatus.BAD_REQUEST);
     }
 
-    // 5. POST /attractions/delete/{name}
-    @PostMapping("/delete/{name}") // Ændret fra DELETE til POST og sat @PathVariable på stien
+    @PostMapping("/delete/{name}")
     public ResponseEntity<String> removeAttraction(@PathVariable String name) {
-        return touristService.removeAttraction(name);
+        boolean deleted = touristService.removeAttraction(name);
+        if (deleted) {
+            return new ResponseEntity<>("Attraktion slettet: " + name, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Kunne ikke finde attraktionen: " + name, HttpStatus.NOT_FOUND);
     }
 }
 
