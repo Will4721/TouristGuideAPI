@@ -1,0 +1,31 @@
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+}
+
+.Left-text{
+    font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+}
+.right-text{
+    font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: right;
+    font-size: 12px;
+}
+
+.nav-link{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+}
+
+p{
+    font-family: 'Montserrat', sans-serif;
+    font-size:17px;
+}

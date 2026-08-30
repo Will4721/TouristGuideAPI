@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #01935a;">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <img src="img.png" class="navbar-image">
+
+        <!-- Fixed Mobile Toggle Button -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Combined Collapse Container -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Navigation Links -->
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link text-light text-center px-3" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center px-3" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center px-3" href="/attractions/Tivoli">Find</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center px-3" href="/attractions">Attractions</a>
+                </li>
+            </ul>
+
+            <!-- Search Bar -->
+            <form action="/search" method="GET" class="d-flex mt-2 mt-lg-0" id="searchForm" style="max-width: 350px;">
+                <div class="input-group">
+                    <!-- ADDED id="searchInput" HERE -->
+                    <input class="form-control" type="search" id="searchBar" placeholder="Search" aria-label="Search" required>
+                    <button id="searchBtn" class="btn btn-outline-success bg-white text-dark border-light-subtle" type="button">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+

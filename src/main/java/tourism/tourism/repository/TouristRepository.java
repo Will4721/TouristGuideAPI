@@ -3,68 +3,72 @@ package tourism.tourism.repository;
 import org.springframework.stereotype.Repository;
 import tourism.tourism.model.TouristAttraction;
 
+import java.sql.*;
 import java.util.ArrayList;
-
-
+import java.util.List;
 
 @Repository
 public class TouristRepository {
-  private final ArrayList<TouristAttraction> steder = new ArrayList<>();
+    private final List<TouristAttraction> steder = new ArrayList<>();
+    private final String url = "jdbc:sqlite:src/main/resources/Attractions.db";
+
+    public Connection connect() throws SQLException {
+        return DriverManager.getConnection(url);
+    }
 
 
     public TouristRepository() {
-        TouristAttraction tivoli = new TouristAttraction("Tivoli","its a tivoli");
-        TouristAttraction bakken = new TouristAttraction("Bakken", "its the oldest Tivoli in the world");
-
-        steder.add(tivoli);
-        steder.add(bakken);
+        steder.add(new TouristAttraction(1,"Tivoli", "its a tivoli"));
+        steder.add(new TouristAttraction(2,"Bakken", "its the oldest Tivoli in the world"));
     }
-    //crud create new resource
-    public void addAttraction(String name, String description){
-        TouristAttraction Attraction = new TouristAttraction(name,description);
-    }
-    //crud remove resource
-    public void removeAttraction(String name, String description){
 
-            steder.removeIf(item -> item.getName().equals("TargetName"));
+    // Hent alle
+    public List<TouristAttraction> getAll() {
 
+        List<TouristAttraction> attractions = new ArrayList<>();
+
+        String sql = "SELECT * FROM Attraction";
+
+        try (Connection connection = connect();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+
+                TouristAttraction attraction =
+                        new TouristAttraction(id, name, description);
+
+                attractions.add(attraction);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return attractions;
     }
-    //crud remove resource
-    public void updateAttraction(int pick, String name,String newname, String description,String newdescription){
-        //change to switch case if more attributes arrive
-        if(pick == 1){
-            for(TouristAttraction item : steder){
-                if(item.getName().equals(name)){
-                    item.setName(newname);
-                    break;
-                }
+
+    // Find en ud fra navn
+    public TouristAttraction findByName(String name) {
+        for (TouristAttraction item : steder) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                return item;
             }
         }
-        if(pick == 2){
-            for(TouristAttraction item : steder){
-                if(item.getName().equals(name)){
-                    item.setName(newname);
-                    break;
-                }
-            }
-        }
-
+        return null; // Returnerer null hvis den ikke findes
     }
 
-    public String searchAttraction(String name){
-        for(TouristAttraction item : steder){
-            if(item.getName().equals(name)){
-                return "Name: " + item.getName() + " " + "Description: " + item.getDescription();
-            }
-        }
-        return "Not found";
-    }
-    public void displayAttractions(){
-        for(TouristAttraction item : steder){
-            System.out.println("Name: " + item.getName() + " " + "Description: " + item.getDescription());
-        }
+    // Tilføj ny
+    public void save(TouristAttraction attraction) {
+        steder.add(attraction);
     }
 
-
-
+    // Slet ud fra navn
+    public boolean delete(String name) {
+        return steder.removeIf(item -> item.getName().equalsIgnoreCase(name));
+    }
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+    <link href="styles.css" rel="stylesheet">
+    <title>My Webpage</title>
+
+</head>
+
+<body>
+<header id="mainheader">
+</header>
+<main>
+    <div class="mx-5 mt-3">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <h1>Velkommen til turist info</h1>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="text-lg pt-2 font-medium">
+                    <p>In here you will find useful information about turism in copenhagen. You can find details about landmarks across the city
+                        &nbsp;</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="carouselExampleSlidesOnly" class="carousel slide " data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="Tivoli.jpg" class="d-block w-50 mx-auto">
+            </div>
+            <div class="carousel-item">
+                <img src="Bakken.jpg" class="d-block w-50 mx-auto" >
+            </div>
+            <div class="carousel-item">
+                <img src="Tivoli.jpg" class="d-block w-50 mx-auto" >
+            </div>
+        </div>
+    </div>
+    <div class="container text-center my-4">
+        <div id="resultsDisplay" class="p-3 border rounded bg-light mx-auto w-50" style="display: none;"></div>
+    </div>
+
+</main>
+<footer></footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
+<script>
+    $("#mainheader").load("_header.html", function() {
+        const searchBtn = document.getElementById("searchBtn");
+        const searchBar = document.getElementById("searchBar");
+
+        if (searchBtn) {
+            searchBtn.addEventListener("click", function(event) {
+                // Stop the standard form submission layout
+                event.preventDefault();
+
+                const queryValue = searchBar.value.trim();
+                if (!queryValue) return;
+
+                // Redirects the entire browser page to: /attractions/Tivoli
+                window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
+            });
+        }
+    });
+</script>
+</body>
+</html>
