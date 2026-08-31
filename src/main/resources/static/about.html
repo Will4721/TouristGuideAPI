@@ -22,9 +22,28 @@
 
     Curabitur dignissim, nulla a vestibulum imperdiet, augue augue bibendum ante, eu venenatis elit mauris id sapien. Nullam fermentum massa vel orci tempus, id lobortis velit imperdiet. Donec rutrum tempus consequat. Quisque maximus justo in nisi vestibulum, in blandit magna accumsan. Donec tortor risus, euismod a imperdiet ut, venenatis in lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam vulputate massa non nunc fermentum tincidunt non nec quam. Etiam cursus et sem ac malesuada. Maecenas vestibulum vitae mauris vel sodales. Curabitur magna velit, auctor eget elit ut, hendrerit rutrum quam. Vestibulum a ante congue, maximus eros ut, posuere erat. Maecenas id elit id ante fringilla fermentum in eu nulla. Sed vel eros tellus. Aliquam ultricies pellentesque nulla.
 </p>
+<footer id = "footerbottom">
+</footer>
 </body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
 <script>
-    $("#mainheader").load("_header.html");
+    $("#footerbottom").load("_footer.html")
+    $("#mainheader").load("_header.html", function() {
+        const searchBtn = document.getElementById("searchBtn");
+        const searchBar = document.getElementById("searchBar");
+
+        if (searchBtn) {
+            searchBtn.addEventListener("click", function(event) {
+                // Stop the standard form submission layout
+                event.preventDefault();
+
+                const queryValue = searchBar.value.trim();
+                if (!queryValue) return;
+
+                // Redirects the entire browser page to: /attractions/Tivoli
+                window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
+            });
+        }
+    });
 </script>
