@@ -2,14 +2,15 @@ package tourism.tourism.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.service.TouristService;
+import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
-@RestController // Brug @RestController i stedet for @Controller ved string/JSON endpoints
-@RequestMapping("attractions")
+@Controller
 public class TouristController {
 
     private final TouristService touristService;
@@ -18,43 +19,41 @@ public class TouristController {
         this.touristService = touristService;
     }
 
-    @GetMapping
-    public ResponseEntity<String> getAllAttractions() {
+
+
+
+    @GetMapping("/attractions")
+    public String getAllAttractions(ModelMap modelMap) {
         List<TouristAttraction> attractions = touristService.getAllAttractions();
 
-        if (attractions.isEmpty()) {
-            return new ResponseEntity<>("Ingen attraktioner fundet i systemet.", HttpStatus.OK);
-        }
 
-        StringBuilder result = new StringBuilder();
-        for (TouristAttraction item : attractions) {
-            result.append(item.toString()).append("\n");
-        }
+        modelMap.addAttribute("attractions", attractions);
 
-        return new ResponseEntity<>(result.toString(), HttpStatus.OK);
+        return "Getall";
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<String> searchAttraction(@PathVariable String name) {
+    @GetMapping("/attractions/{name}")
+    public String searchAttraction( @PathVariable String name, ModelMap modelMap) {
         TouristAttraction item = touristService.getAttractionByName(name);
-        if (item != null) {
-            return new ResponseEntity<>(item.toString(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        modelMap.addAttribute("attraction", item);
+
+        return "main";
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<String> executeSearch(@RequestParam("query") String name) {
-        return searchAttraction(name);
+    @GetMapping("/attractions/search")
+    public String executeSearch(@RequestParam("query") String name,ModelMap modelMap) {
+        return searchAttraction(name,modelMap);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/attractions/add")
+    @ResponseBody
     public ResponseEntity<String> addAttraction(@RequestParam int id, @RequestParam String name, @RequestParam String description) {
         touristService.addAttraction(id, name, description);
         return new ResponseEntity<>("Attraktion tilføjet: " + name, HttpStatus.CREATED);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/attractions/update")
+    @ResponseBody
     public ResponseEntity<String> updateAttraction(
             @RequestParam int pick,
             @RequestParam String name,
@@ -68,7 +67,8 @@ public class TouristController {
         return new ResponseEntity<>("Kunne ikke opdatere attraktion", HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/delete/{name}")
+    @PostMapping("/attractions/delete/{name}")
+    @ResponseBody
     public ResponseEntity<String> removeAttraction(@PathVariable String name) {
         boolean deleted = touristService.removeAttraction(name);
         if (deleted) {

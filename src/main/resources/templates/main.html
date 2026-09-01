@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -9,19 +9,48 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"></script>
-    <link href="styles.css" rel="stylesheet">
+    <link th:href="@{/styles.css}" rel="stylesheet">
     <title>My Webpage</title>
 
 </head>
 
 <body>
 <header id="mainheader">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #01935a;">
+        <div class="container-fluid">
+
+            <img th:src="@{/img.png}" class="navbar-image">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/about.html}">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions/Tivoli}">Find</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions}">Attractions</a></li>
+                </ul>
+
+                <!-- Søgebar -->
+                <form class="d-flex mt-2 mt-lg-0" style="max-width: 350px;">
+                    <div class="input-group">
+                        <input class="form-control" type="search" id="searchBar" placeholder="Search" required>
+                        <button id="searchBtn" class="btn btn-outline-success bg-white text-dark" type="button">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
 </header>
 <main>
     <div class="mx-5 mt-3">
         <div class="row">
             <div class="col-12 col-lg-6">
-                <h1>{{placeholder}}</h1>
+                <div>
+                    <h1 th:text="${attraction.name}">Fallback Text (Visible only when opening file locally)</h1>
+                </div>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="text-lg pt-2 font-medium">
@@ -34,13 +63,13 @@
     <div id="carouselExampleSlidesOnly" class="carousel slide " data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="Tivoli.jpg" class="d-block w-50 mx-auto">
+                <img th:src="@{/Tivoli.jpg}" class="d-block w-50 mx-auto">
             </div>
             <div class="carousel-item">
-                <img src="Bakken.jpg" class="d-block w-50 mx-auto" >
+                <img th:src="@{/Bakken.jpg}" class="d-block w-50 mx-auto">
             </div>
             <div class="carousel-item">
-                <img src="Tivoli.jpg" class="d-block w-50 mx-auto" >
+                <img th:src="@{/Tivoli.jpg}" class="d-block w-50 mx-auto">
             </div>
         </div>
     </div>
@@ -49,28 +78,32 @@
     </div>
 
 </main>
-<footer id = "footerbottom">
+<footer>
+    <nav class="navbar navbar-expand-lg navbar-light footer" style="background-color: #01935a;">
+        <div class="container-fluid">
+            <footer>
+                <p class="nav-link text-light text-center px-3">Author: William Victor</p>
+                <p><a class="nav-link text-light text-center px-3" >William@example.com</a></p>
+            </footer>
+        </div>
+    </nav>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
 <script>
-    $("#footerbottom").load("_footer.html")
-    $("#mainheader").load("_header.html", function() {
-        const searchBtn = document.getElementById("searchBtn");
-        const searchBar = document.getElementById("searchBar");
+    const searchBtn = document.getElementById("searchBtn");
+    const searchBar = document.getElementById("searchBar");
 
-        if (searchBtn) {
-            searchBtn.addEventListener("click", function(event) {
-                // Stop the standard form submission layout
-                event.preventDefault();
 
-                const queryValue = searchBar.value.trim();
-                if (!queryValue) return;
+    if (searchBtn) {
+        searchBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            const queryValue = searchBar.value.trim();
+            if (!queryValue) return;
 
-                // Redirects the entire browser page to: /attractions/Tivoli
-                window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
-            });
-        }
-    });
+            // Sender brugeren til /attractions/Navn
+            window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
+        });
+    }
 </script>
 </body>
 </html>

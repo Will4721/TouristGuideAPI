@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+    <link href="styles.css" rel="stylesheet">
+    <title>getall</title>
+
+</head>
+<body>
+<header id="mainheader">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #01935a;">
+        <div class="container-fluid">
+
+            <img th:src="@{/img.png}" class="navbar-image">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions/Tivoli}">Find</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions}">Attractions</a></li>
+                </ul>
+
+                <!-- Søgebar -->
+                <form class="d-flex mt-2 mt-lg-0" style="max-width: 350px;">
+                    <div class="input-group">
+                        <input class="form-control" type="search" id="searchBar" placeholder="Search" required>
+                        <button id="searchBtn" class="btn btn-outline-success bg-white text-dark" type="button">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="mx-5 mt-3">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="w-50">Navn</th>
+                        <th scope="col" class="w-50">Beskrivelse</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${attractions}">
+
+                        <td class="fw-bold">
+                            <a th:href="@{/attractions/{name}(name=${item.name})}" th:text="${item.name}">Tivoli</a>
+                        </td>
+
+
+                        <td class="text-muted">
+                            <a class="linking"    th:text="${item.description}">Forlystelsespark i København</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="text-lg pt-2 font-medium">
+                    <p>In here you will find useful information about turism in copenhagen. You can find details about landmarks across the city
+                        &nbsp;</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <nav class="navbar navbar-expand-lg navbar-light footer" style="background-color: #01935a;">
+        <div class="container-fluid">
+            <footer>
+                <p class="nav-link text-light text-center px-3">Author: William Victor</p>
+                <p><a class="nav-link text-light text-center px-3" >William@example.com</a></p>
+            </footer>
+        </div>
+    </nav>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
+<script>
+    const searchBtn = document.getElementById("searchBtn");
+    const searchBar = document.getElementById("searchBar");
+
+    if (searchBtn) {
+        searchBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            const queryValue = searchBar.value.trim();
+            if (!queryValue) return;
+
+            // Sender brugeren til /attractions/Navn
+            window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
+        });
+    }
+
+</script>
+
+</body>
+</html>

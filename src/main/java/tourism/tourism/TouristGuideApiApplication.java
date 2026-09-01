@@ -12,7 +12,6 @@ import java.sql.*;
 public class TouristGuideApiApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(TouristGuideApiApplication.class, args);
     }
 
