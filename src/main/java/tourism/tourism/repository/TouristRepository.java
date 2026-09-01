@@ -3,6 +3,7 @@ package tourism.tourism.repository;
 import org.springframework.stereotype.Repository;
 import tourism.tourism.model.TouristAttraction;
 
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +11,27 @@ import java.util.List;
 @Repository
 public class TouristRepository {
 
-    private final String url = "jdbc:sqlite:Attractions.db";
+    private final String dbName = "Attractions.db";
 
     public Connection connect() throws SQLException {
-        return DriverManager.getConnection(url);
+        try {
+            // Henter filen dynamisk fra src/main/resources mappen
+            ClassLoader classLoader = getClass().getClassLoader();
+            URL resource = classLoader.getResource(dbName);
+
+            String finalUrl;
+            if (resource != null) {
+                // Hvis filen findes i resources (både lokalt og på Railway)
+                finalUrl = "jdbc:sqlite:" + resource.getPath();
+            } else {
+                // Fallback hvis den mod forventning ikke findes
+                finalUrl = "jdbc:sqlite:" + dbName;
+            }
+
+            return DriverManager.getConnection(finalUrl);
+        } catch (Exception e) {
+            throw new SQLException("Kunne ikke finde eller oprette forbindelse til databasen i resources: " + e.getMessage());
+        }
     }
 
 
