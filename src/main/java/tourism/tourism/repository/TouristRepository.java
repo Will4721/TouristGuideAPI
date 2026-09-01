@@ -11,30 +11,12 @@ import java.util.List;
 @Repository
 public class TouristRepository {
 
-    private final String url = "jdbc:sqlite:Attractions.db";
+    private final String url = System.getenv("ghcr.io/railwayapp-templates/postgres-ssl:18");
 
     public Connection connect() throws SQLException {
-        Connection conn = DriverManager.getConnection(url);
-
-        // Tving Java til at bygge tabellen med det samme, hvis den ikke findes live
-        try (Statement stmt = conn.createStatement()) {
-            stmt.execute("CREATE TABLE IF NOT EXISTS attraction (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "name TEXT NOT NULL, " +
-                    "description TEXT);");
-
-            // Tjek om databasen er tom. Hvis den er, så indsæt dine startdata
-            var rs = stmt.executeQuery("SELECT COUNT(*) FROM attraction");
-            if (rs.next() && rs.getInt(1) == 0) {
-                stmt.execute("INSERT INTO attraction (name, description) VALUES ('Tivoli', 'Forlystelsespark i København');");
-                stmt.execute("INSERT INTO attraction (name, description) VALUES ('Den Lille Havfrue', 'Berømt statue');");
-                System.out.println("Live database initialiseret med startdata!");
-            }
-        } catch (Exception e) {
-            System.err.println("Kunne ikke initialisere tabeller i SQLite: " + e.getMessage());
-        }
-
-        return conn;
+        // Hvis vi kører lokalt og ikke på serveren, falder vi tilbage til SQLite
+        String connectionUrl = (url != null) ? url : "jdbc:sqlite:Attractions.db";
+        return DriverManager.getConnection(connectionUrl);
     }
 
 
