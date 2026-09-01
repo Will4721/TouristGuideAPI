@@ -14,9 +14,19 @@ public class TouristRepository {
     private final String url = System.getenv("ghcr.io/railwayapp-templates/postgres-ssl:18");
 
     public Connection connect() throws SQLException {
-        // Hvis vi kører lokalt og ikke på serveren, falder vi tilbage til SQLite
-        String connectionUrl = (url != null) ? url : "jdbc:sqlite:Attractions.db";
-        return DriverManager.getConnection(connectionUrl);
+        // 1. Henter det automatiske link fra Railway live
+        String railwayUrl = System.getenv("ghcr.io/railwayapp-templates/postgres-ssl:18");
+
+        String finalUrl;
+        if (railwayUrl != null) {
+            // Railway leverer linket som "postgresql://...", men Java JDBC kræver "jdbc:postgresql://..."
+            finalUrl = railwayUrl.replace("postgresql://", "jdbc:postgresql://");
+        } else {
+            // Fallback til din lokale test-database på din egen computer, hvis du arbejder derhjemme
+            finalUrl = "jdbc:sqlite:Attractions.db";
+        }
+
+        return DriverManager.getConnection(finalUrl);
     }
 
 
