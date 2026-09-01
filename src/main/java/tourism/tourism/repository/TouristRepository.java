@@ -11,27 +11,30 @@ import java.util.List;
 @Repository
 public class TouristRepository {
 
-    private final String dbName = "Attractions.db";
+    private final String url = "jdbc:sqlite:Attractions.db";
 
     public Connection connect() throws SQLException {
-        try {
-            // Henter filen dynamisk fra src/main/resources mappen
-            ClassLoader classLoader = getClass().getClassLoader();
-            URL resource = classLoader.getResource(dbName);
+        Connection conn = DriverManager.getConnection(url);
 
-            String finalUrl;
-            if (resource != null) {
-                // Hvis filen findes i resources (både lokalt og på Railway)
-                finalUrl = "jdbc:sqlite:" + resource.getPath();
-            } else {
-                // Fallback hvis den mod forventning ikke findes
-                finalUrl = "jdbc:sqlite:" + dbName;
+        // Tving Java til at bygge tabellen med det samme, hvis den ikke findes live
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute("CREATE TABLE IF NOT EXISTS attraction (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "name TEXT NOT NULL, " +
+                    "description TEXT);");
+
+            // Tjek om databasen er tom. Hvis den er, så indsæt dine startdata
+            var rs = stmt.executeQuery("SELECT COUNT(*) FROM attraction");
+            if (rs.next() && rs.getInt(1) == 0) {
+                stmt.execute("INSERT INTO attraction (name, description) VALUES ('Tivoli', 'Forlystelsespark i København');");
+                stmt.execute("INSERT INTO attraction (name, description) VALUES ('Den Lille Havfrue', 'Berømt statue');");
+                System.out.println("Live database initialiseret med startdata!");
             }
-
-            return DriverManager.getConnection(finalUrl);
         } catch (Exception e) {
-            throw new SQLException("Kunne ikke finde eller oprette forbindelse til databasen i resources: " + e.getMessage());
+            System.err.println("Kunne ikke initialisere tabeller i SQLite: " + e.getMessage());
         }
+
+        return conn;
     }
 
 
