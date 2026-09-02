@@ -47,7 +47,7 @@ public class TouristService {
             return false;
         }
 
-        // TODO: Tilføj en update(item) metode i TouristRepository så ændringen gemmes i DB
+
         return true;
     }
 }
