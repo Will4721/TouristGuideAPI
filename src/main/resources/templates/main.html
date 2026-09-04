@@ -48,16 +48,16 @@
     <div class="mx-5 mt-3">
         <div class="row align-items-center">
             <div class="col-12 col-lg-6">
-                <div>
-                    <h1 th:text="${attraction.name}" class="text-start">Fallback Text (Visible only when opening file locally)</h1>
+                <div class="d-flex align-items-baseline gap-2">
+                    <h1 th:text="${attraction.name}" class="m-0">Tivoli</h1>
+
+                    <h2 th:text="${attraction.description}" class="fs-4 text-secondary fw-normal m-0">Forlystelsespark</h2>
                 </div>
             </div>
 
             <div class="col-12 col-lg-6">
                 <div class="text-lg pt-2 font-medium">
-                    <h2 th:text="${attraction.description}" class="text-start text-lg-end">
-                        In here you will find useful information about turism in copenhagen. You can find details about landmarks across the city
-                    </h2>
+                    <h2>Andre Atrraktioner</h2>
                 </div>
             </div>
         </div>
@@ -85,8 +85,6 @@
                 <td class="fw-bold">
                     <a th:href="@{/attractions/{name}(name=${item.name})}" th:text="${item.name}">Tivoli</a>
                 </td>
-
-
 
             </tr>
             </tbody>

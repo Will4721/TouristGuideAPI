@@ -36,6 +36,10 @@ public class TouristController {
     public String searchAttraction( @PathVariable String name, ModelMap modelMap) {
         List<TouristAttraction> attractions = touristService.getAllAttractions();
         TouristAttraction item = touristService.getAttractionByName(name);
+        if (item == null) {
+            // Redirect right back to the working /attractions main list page
+            return "redirect:/attractions";
+        }
         modelMap.addAttribute("attraction", item);
         modelMap.addAttribute("attractions", attractions);
 
