@@ -48,7 +48,18 @@ p{
 }
 
 .footer{
+    background-color:#01935a;
     flex-shrink: 0;
     width: 100%;
+    color: white;
+    padding: 5px 0 5px 10px;
+    text-align: left;
 
 }
+
+.footer p {
+    margin: 5px 0;
+    font-size: 14px;
+
+}
+
