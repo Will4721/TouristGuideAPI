@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class TouristRepository {
 
-   private final String url = "jdbc:sqlite:Attractions.db";
+    private final String url = "jdbc:sqlite:Attractions.db";
 
     public Connection connect() throws SQLException {
         return DriverManager.getConnection(url);
@@ -36,8 +36,9 @@ public class TouristRepository {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
+                String longerdescription = resultSet.getString("longerdescription");
                 // vi adder dem til vores arraylist
-                attractions.add(new TouristAttraction(id, name, description));
+                attractions.add(new TouristAttraction(id, name, description,longerdescription));
             }
 
         } catch (SQLException e) {
@@ -52,6 +53,7 @@ public class TouristRepository {
     public TouristAttraction findByName(String name) {
         //vores query
         String sql = "SELECT * FROM attraction WHERE name = ?";
+
         //vi connecter til DB
         try (Connection connection = connect();
              //vi skriver vores statement men executer det ikke endnu
@@ -66,11 +68,13 @@ public class TouristRepository {
                 int id = resultSet.getInt("id");
                 String attractionName = resultSet.getString("name");
                 String description = resultSet.getString("description");
+                String longerdescription = resultSet.getString("longerdescription");
                 //vi returnere alle dataerne
                 return new TouristAttraction(
                         id,
                         attractionName,
-                        description
+                        description,
+                        longerdescription
                 );
             }
 

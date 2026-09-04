@@ -34,8 +34,10 @@ public class TouristController {
 
     @GetMapping("/attractions/{name}")
     public String searchAttraction( @PathVariable String name, ModelMap modelMap) {
+        List<TouristAttraction> attractions = touristService.getAllAttractions();
         TouristAttraction item = touristService.getAttractionByName(name);
         modelMap.addAttribute("attraction", item);
+        modelMap.addAttribute("attractions", attractions);
 
         return "main";
     }
@@ -47,8 +49,8 @@ public class TouristController {
 
     @PostMapping("/attractions/add")
     @ResponseBody
-    public ResponseEntity<String> addAttraction(@RequestParam int id, @RequestParam String name, @RequestParam String description) {
-        touristService.addAttraction(id, name, description);
+    public ResponseEntity<String> addAttraction(@RequestParam int id, @RequestParam String name, @RequestParam String description, @RequestParam String longerdescription) {
+        touristService.addAttraction(id, name, description,longerdescription);
         return new ResponseEntity<>("Attraktion tilføjet: " + name, HttpStatus.CREATED);
     }
 

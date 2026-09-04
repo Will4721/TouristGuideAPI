@@ -52,3 +52,41 @@ p{
     width: 100%;
 
 }
+
+#mainstyle{
+
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+
+    gap: 20px; /* Adds space between the text box and the image */
+    align-items: start;
+
+
+}
+
+.image {
+    width: 100%;       /* Gør at billedet tilpasser sig kolonnens bredde */
+    max-width: 100%;   /* Sikrer at det aldrig bryder ud af sin boks */
+    height: auto;      /* Bevarer billedets proportioner så det ikke bliver strukket */
+    object-fit: cover; /* Valgfrit: Perfekt hvis billedet skal udfylde et bestemt areal */
+}
+
+.soft-padding {
+    max-width: 500px;         /* Prevents it from stretching across the whole screen */
+    width: 100%;              /* Ensures it stays responsive on smaller mobile screens */
+
+    /* 2. Move the text further in (Internal Spacing) */
+    padding: 15px 30px;       /* 15px top/bottom, 30px left/right inside the yellow box */
+
+    /* 3. Keep the box centered on the page */
+    margin: 20px auto;        /* Centers the box itself horizontally */
+
+    /* Your existing styling */
+    background-color: #fcf4d6; /* Your yellow color */
+    border-radius: 25px;      /* Rounded corners */
+    box-sizing: border-box;
+    height: auto;
+}
