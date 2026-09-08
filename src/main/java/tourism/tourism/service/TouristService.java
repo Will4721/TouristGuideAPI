@@ -1,10 +1,14 @@
 package tourism.tourism.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.repository.TouristRepository;
 
 import java.util.List;
+
+
 
 @Service
 public class TouristService {
@@ -17,6 +21,14 @@ public class TouristService {
 
     public List<TouristAttraction> getAllAttractions() {
         return touristRepository.getAll();
+    }
+
+    public int checkLogin(String username, String password, HttpSession session , ModelMap model){
+        return touristRepository.loginCheck(username,password,session,model);
+    }
+
+    public int registerLogin(String username, String password, HttpSession session , ModelMap model){
+        return touristRepository.registerCheck(username,password,session,model);
     }
 
     public TouristAttraction getAttractionByName(String name) {

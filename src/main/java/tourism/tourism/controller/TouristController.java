@@ -1,14 +1,18 @@
 package tourism.tourism.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.service.TouristService;
 import org.springframework.ui.ModelMap;
 
 import java.util.List;
+
+
 
 @Controller
 public class TouristController {
@@ -30,6 +34,27 @@ public class TouristController {
         modelMap.addAttribute("attractions", attractions);
 
         return "Getall";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam(required = false) String username, @RequestParam(required = false) String password, HttpSession session, ModelMap model){
+        if(touristService.checkLogin(username,password,session,model) == 1) {
+            model.addAttribute("username", username);
+            return "main";
+        }else{
+            return "login";
+        }
+    }
+
+    @PostMapping("/register")
+    public String register(@RequestParam(required = false) String username, @RequestParam(required = false) String password, HttpSession session, ModelMap model){
+        if(touristService.checkLogin(username,password,session,model) == 1) {
+            model.addAttribute("username", username);
+            return "login";
+        }else{
+            model.addAttribute("error", "Username already taken");
+            return "register";
+        }
     }
 
     @GetMapping("/attractions/{name}")
