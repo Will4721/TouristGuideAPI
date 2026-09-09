@@ -76,11 +76,15 @@ public class TouristController {
         return searchAttraction(name,modelMap);
     }
 
+    @GetMapping("/attractions/add")
+    public String showAddPage(){
+        return "add";
+    }
+
     @PostMapping("/attractions/add")
-    @ResponseBody
-    public ResponseEntity<String> addAttraction(@RequestParam int id, @RequestParam String name, @RequestParam String description, @RequestParam String longerdescription) {
+    public String addAttraction(@RequestParam int id, @RequestParam String name, @RequestParam String description, @RequestParam String longerdescription) {
         touristService.addAttraction(id, name, description,longerdescription);
-        return new ResponseEntity<>("Attraktion tilføjet: " + name, HttpStatus.CREATED);
+        return "redirect:/attractions";
     }
 
     @PostMapping("/attractions/update")
