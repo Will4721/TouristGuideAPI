@@ -74,7 +74,7 @@ public class TouristController {
         List<TouristAttraction> attractions = touristService.getAllAttractions();
         TouristAttraction item = touristService.getAttractionByName(name);
         if (item == null) {
-            // Redirect right back to the working /attractions main list page
+
             return "redirect:/attractions";
         }
         modelMap.addAttribute("attraction", item);
@@ -130,7 +130,7 @@ public class TouristController {
         model.addAttribute("top", topText);
         model.addAttribute("bottom", bottomText);
 
-        return "apology"; // Returnerer din apology.html skabelon
+        return "apology";
     }
 }
 

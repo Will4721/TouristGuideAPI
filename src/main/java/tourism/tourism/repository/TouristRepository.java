@@ -77,7 +77,7 @@ public class TouristRepository {
         int userId = (int) rows.get(0).get("id");
         session.setAttribute("user_id", userId);
 
-        // 6. Redirect til forsiden
+
         return 1;
 
     }
