@@ -36,8 +36,8 @@ public class TouristService {
         return touristRepository.findByName(name);
     }
 
-    public void addAttraction(int id, String name, String description,String longerdescription) {
-        TouristAttraction attraction = new TouristAttraction(id, name, description,longerdescription);
+    public void addAttraction(int id, String name, String description,String longerdescription,double ticketPrice) {
+        TouristAttraction attraction = new TouristAttraction(id, name, description,longerdescription,ticketPrice);
         touristRepository.save(attraction);
     }
 
@@ -64,6 +64,8 @@ public class TouristService {
         return true;
     }
     public boolean updateTicketPrice(String name, Double ticketPrice) {
-        return touristRepository.updateTicketPrice(name, ticketPrice);
+        //TODO du returnere metoden du bruger
+        //return touristRepository.updateTicketPrice(name, ticketPrice);
+        return true;
     }
 }

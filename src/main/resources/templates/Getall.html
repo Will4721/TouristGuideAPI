@@ -29,6 +29,7 @@
                     <li class="nav-item"><a class="nav-link text-light text-center px-3" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions/Tivoli}">Find</a></li>
                     <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions}">Attractions</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/login}">login/register</a></li>
                 </ul>
 
                 <!-- Søgebar -->
@@ -64,6 +65,11 @@
 
                         <td class="text-muted">
                             <a class="linking"    th:text="${item.description}">Forlystelsespark i København</a>
+                        </td>
+                        <td>
+                            <form th:action="@{/attractions/delete/{name}(name=${item.name})}" th:method="post">
+                            <button class="btn btn-primary" type="submit">Slet</button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

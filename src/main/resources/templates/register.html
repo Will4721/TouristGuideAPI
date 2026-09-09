@@ -29,6 +29,7 @@
                     <li class="nav-item"><a class="nav-link text-light text-center px-3" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions/Tivoli}">Find</a></li>
                     <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions}">Attractions</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/login}">login/register</a></li>
                 </ul>
 
                 <!-- Søgebar -->
@@ -45,7 +46,7 @@
 <main>
 <form action="#" th:action="@{/register}" th:object="${register}" method="post">
     <div class="mb-3">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" th:field="*{username}" type="text">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username"  type="text">
     </div>
     <div>
         <input class="form-control mx-auto w-auto" name="password" type="password">

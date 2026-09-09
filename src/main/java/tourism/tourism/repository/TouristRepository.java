@@ -60,18 +60,18 @@ public class TouristRepository {
 
     public int loginCheck(String username, String password,HttpSession session,ModelMap model){
         if(username == null || username.trim().isEmpty()){
-            apology(model, "must provide username", 403);
+            System.out.println("username");
             return -1;
         }
         if(password == null || password.trim().isEmpty()){
-            apology(model, "must provide password", 403);
+            System.out.println("password");
             return -1;
         }
         String sql = "SELECT * FROM users WHERE username = ?";
         List<Map<String, Object>> rows = db.queryForList(sql, username);
 
         if (rows.size() != 1 || !passwordEncoder.matches(password, (String) rows.get(0).get("hash"))) {
-            apology(model, "invalid username and/or password", 403);
+            System.out.println("wrong password");
             return -1;
         }
         int userId = (int) rows.get(0).get("id");
@@ -87,12 +87,12 @@ public class TouristRepository {
 
         if(username == null || username.trim().isEmpty()){
             System.out.println("username");
-            apology(model, "must provide username", 403);
+
             return -1;
         }
         if(password == null || password.trim().isEmpty()){
             System.out.println("password");
-            apology(model, "must provide password", 403);
+
             return -1;
         }
         String sql = "SELECT * FROM users WHERE username = ?";
@@ -111,7 +111,7 @@ public class TouristRepository {
 
     // Find en ud fra navn
     public TouristAttraction findByName(String name) {
-        String sql = "SELECT a.id, a.name, a.description, a.longerdescription, t.tag_name  a.ticket_price" +
+        String sql = "SELECT a.id, a.name, a.description, a.longerdescription, t.tag_name,  a.ticket_price " +
                 "FROM attraction a " +
                 "LEFT JOIN attraction_tags at ON a.id = at.attraction_id " +
                 "LEFT JOIN tags t ON at.tag_id = t.id " +
@@ -195,11 +195,6 @@ public class TouristRepository {
 
         return false;
     }
-    private String apology(ModelMap model, String message, int statusCode) {
-        model.addAttribute("message", message);
-        model.addAttribute("status", statusCode);
-        System.out.println("apology called");
-        return "apology"; // Returnerer din apology.html skabelon
-    }
+
 
 }
