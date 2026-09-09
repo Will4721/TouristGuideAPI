@@ -45,8 +45,9 @@ public class TouristRepository {
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 String longerdescription = resultSet.getString("longerdescription");
+                double ticket_price = resultSet.getDouble("ticket_price");
                 // vi adder dem til vores arraylist
-                attractions.add(new TouristAttraction(id, name, description,longerdescription));
+                attractions.add(new TouristAttraction(id, name, description,longerdescription,ticket_price));
             }
 
         } catch (SQLException e) {
@@ -110,7 +111,7 @@ public class TouristRepository {
 
     // Find en ud fra navn
     public TouristAttraction findByName(String name) {
-        String sql = "SELECT a.id, a.name, a.description, a.longerdescription, t.tag_name " +
+        String sql = "SELECT a.id, a.name, a.description, a.longerdescription, t.tag_name  a.ticket_price" +
                 "FROM attraction a " +
                 "LEFT JOIN attraction_tags at ON a.id = at.attraction_id " +
                 "LEFT JOIN tags t ON at.tag_id = t.id " +
@@ -129,8 +130,9 @@ public class TouristRepository {
                     String attractionName = resultSet.getString("name");
                     String description = resultSet.getString("description");
                     String longerDescription = resultSet.getString("longerdescription");
+                    double ticket_price = resultSet.getDouble("ticket_price");
 
-                    attraction = new TouristAttraction(id, attractionName, description, longerDescription);
+                    attraction = new TouristAttraction(id, attractionName, description, longerDescription,ticket_price);
                 }
 
                 // Hver række indeholder et nyt tag for denne attraktion
