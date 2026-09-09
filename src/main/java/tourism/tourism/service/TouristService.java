@@ -63,4 +63,7 @@ public class TouristService {
 
         return true;
     }
+    public boolean updateTicketPrice(String name, Double ticketPrice) {
+        return touristRepository.updateTicketPrice(name, ticketPrice);
+    }
 }
