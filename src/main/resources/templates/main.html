@@ -57,13 +57,14 @@
 
             <div class="col-12 col-lg-6">
                 <div class="text-lg pt-2 font-medium">
-                    <h2>Andre Atrraktioner</h2>
+                    <h2 class="text-start text-lg-end">Andre Atrraktioner</h2>
                 </div>
             </div>
         </div>
     </div>
     <div id ="mainstyle">
         <div class="soft-padding">
+
             <p th:text="${attraction.longerdescription}">Fallback text</p>
             <p th:text="${attraction.longerdescription}">Fallback text</p>
             <p th:text="${attraction.longerdescription}">Fallback text</p>
@@ -71,6 +72,8 @@
             <p th:text="${attraction.longerdescription}">Fallback text</p>
             <p th:text="${attraction.longerdescription}">Fallback text</p>
         </div>
+
+
         <img th:src="@{|/images/${attraction.name}.jpg|}" class="image">
 
         <table class="table table-striped table-hover align-middle">
@@ -93,8 +96,12 @@
     <div class="container text-center my-4">
         <div id="resultsDisplay" class="p-3 border rounded bg-light mx-auto w-50" style="display: none;"></div>
     </div>
-
+    <div class="soft-padding">
+        <h2>Tags:</h2>
+        <span class="black-text" th:each="tag : ${attraction.tags}" th:text="|• ${tag}|"  >Tag</span>
+    </div>
 </main>
+
 <footer>
     <nav class="navbar navbar-expand-lg navbar-light footer" style="background-color: #01935a;">
         <div class="container-fluid">

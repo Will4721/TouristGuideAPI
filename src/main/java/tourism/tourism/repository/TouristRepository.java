@@ -2,6 +2,7 @@ package tourism.tourism.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.ModelMap;
 import tourism.tourism.model.TouristAttraction;
@@ -81,11 +82,15 @@ public class TouristRepository {
     }
 
     public int registerCheck(String username, String password,HttpSession session,ModelMap model){
+        System.out.println("repo called"+" "+ username);
+
         if(username == null || username.trim().isEmpty()){
+            System.out.println("username");
             apology(model, "must provide username", 403);
             return -1;
         }
         if(password == null || password.trim().isEmpty()){
+            System.out.println("password");
             apology(model, "must provide password", 403);
             return -1;
         }
@@ -98,45 +103,51 @@ public class TouristRepository {
             return 1;
 
         }
-
+        System.out.println("rows found!!");
         return -1;
 
     }
 
     // Find en ud fra navn
     public TouristAttraction findByName(String name) {
-        //vores query
-        String sql = "SELECT * FROM attraction WHERE name = ?";
+        String sql = "SELECT a.id, a.name, a.description, a.longerdescription, t.tag_name " +
+                "FROM attraction a " +
+                "LEFT JOIN attraction_tags at ON a.id = at.attraction_id " +
+                "LEFT JOIN tags t ON at.tag_id = t.id " +
+                "WHERE a.name = ?";
 
-        //vi connecter til DB
-        try (Connection connection = connect();
-             //vi skriver vores statement men executer det ikke endnu
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            //vi sætter variablen name in i første spørgsmåls tegn i query
-            statement.setString(1, name);
-            //vi executer query
-            ResultSet resultSet = statement.executeQuery();
-            //vi tjekker at linjen existere
-            if (resultSet.next()) {
-                //vi henter data fra linje
-                int id = resultSet.getInt("id");
-                String attractionName = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                String longerdescription = resultSet.getString("longerdescription");
-                //vi returnere alle dataerne
-                return new TouristAttraction(
-                        id,
-                        attractionName,
-                        description,
-                        longerdescription
-                );
+        // Vi bruger query() med en ResultSetExtractor til at samle dataene
+        return db.query(sql, resultSet -> {
+            TouristAttraction attraction = null;
+            List<String> tags = new ArrayList<>();
+
+            // Loop igennem alle rækkerne fra databasen
+            while (resultSet.next()) {
+                // Første gang vi looper, bygger vi selve attraktionen
+                if (attraction == null) {
+                    int id = resultSet.getInt("id");
+                    String attractionName = resultSet.getString("name");
+                    String description = resultSet.getString("description");
+                    String longerDescription = resultSet.getString("longerdescription");
+
+                    attraction = new TouristAttraction(id, attractionName, description, longerDescription);
+                }
+
+                // Hver række indeholder et nyt tag for denne attraktion
+                String tagName = resultSet.getString("tag_name");
+                if (tagName != null) {
+                    tags.add(tagName);
+                }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            // Hvis vi fandt en attraktion, putter vi listen af tags på til sidst
+            if (attraction != null) {
+                attraction.setTags(tags); // Husk at have en setTags(List<String>) i din model!
+                return attraction;
+            }
 
-        return null;
+            return null; // Returner null hvis attraktionen ikke findes
+        }, name); // Her sender vi navnet ind i SQL'ens spørgsmålstegn (?)
     }
 
     // Tilføj ny
@@ -185,6 +196,7 @@ public class TouristRepository {
     private String apology(ModelMap model, String message, int statusCode) {
         model.addAttribute("message", message);
         model.addAttribute("status", statusCode);
+        System.out.println("apology called");
         return "apology"; // Returnerer din apology.html skabelon
     }
 

@@ -36,6 +36,17 @@ public class TouristController {
         return "Getall";
     }
 
+    @GetMapping("/login")
+    public String getLogin(ModelMap modelMap){
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String getRegister(ModelMap modelMap){
+
+        return "register";
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam(required = false) String username, @RequestParam(required = false) String password, HttpSession session, ModelMap model){
         if(touristService.checkLogin(username,password,session,model) == 1) {
@@ -48,10 +59,12 @@ public class TouristController {
 
     @PostMapping("/register")
     public String register(@RequestParam(required = false) String username, @RequestParam(required = false) String password, HttpSession session, ModelMap model){
-        if(touristService.checkLogin(username,password,session,model) == 1) {
+        if(touristService.registerLogin(username,password,session,model) == 1) {
+            System.out.println("user made");
             model.addAttribute("username", username);
             return "login";
         }else{
+            System.out.println("error");
             model.addAttribute("error", "Username already taken");
             return "register";
         }

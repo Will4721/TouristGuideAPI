@@ -28,6 +28,7 @@ public class TouristService {
     }
 
     public int registerLogin(String username, String password, HttpSession session , ModelMap model){
+        System.out.println("service called");
         return touristRepository.registerCheck(username,password,session,model);
     }
 
