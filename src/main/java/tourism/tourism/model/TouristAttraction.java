@@ -1,11 +1,16 @@
 package tourism.tourism.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TouristAttraction {
     private int id;
     private String name;
     private String description;
     private String longerdescription;
+    private Double ticketPrice;
 
+    private List<String> tags = new ArrayList<>();
     @Override
     public String toString() {
         return "TouristAttraction{"+" ID= '" +id+"' "+
@@ -22,11 +27,13 @@ public class TouristAttraction {
         this.longerdescription = longerdescription;
     }
 
-    public TouristAttraction(int id, String name, String description, String longerdescription){
+    public TouristAttraction(int id, String name, String description, String longerdescription, Double ticketPrice){
         this.id = id;
         this.name = name;
         this.description = description;
         this.longerdescription = longerdescription;
+        this.ticketPrice = ticketPrice;
+
 
     }
 
@@ -44,6 +51,22 @@ public class TouristAttraction {
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags){
+        this.tags = tags;
+    }
+
+    public Double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(Double ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 }
 
