@@ -7,7 +7,7 @@ import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.repository.TouristRepository;
 
 import java.util.List;
-
+import java.util.Map;
 
 
 @Service
@@ -45,22 +45,15 @@ public class TouristService {
         return touristRepository.delete(name);
     }
 
-    public boolean updateAttraction(int pick, String currentName, String newName, String newDescription) {
+    public boolean updateAttraction( String currentName, String newName, String newDescription,String newlongerdescription,double ticketPrice) {
         TouristAttraction item = touristRepository.findByName(currentName);
-
+        boolean updated = touristRepository.update(newName,newDescription,newlongerdescription,ticketPrice);
         if (item == null) {
             return false;
         }
-
-        if (pick == 1) {
-            item.setName(newName);
-        } else if (pick == 2) {
-            item.setDescription(newDescription);
-        } else {
+        if(!updated){
             return false;
         }
-
-
         return true;
     }
     public boolean updateTicketPrice(String name, Double ticketPrice) {

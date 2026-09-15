@@ -44,26 +44,34 @@
     </nav>
 </header>
 <main>
- <form>
-     <div class="mb-3">
-         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="name" th:placeholder="${item.}" type="text">
-     </div>
+    <form th:action="@{/attractions/update/{name}(name=${item.name})}" method="post">
 
-     <div class="mb-3">
-         <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
-     </div>
+        <input
+                name="newname"
+                th:value="${item.name}"
+                class="form-control"
+                type="text">
 
-     <div class="mb-3">
-         <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
-     </div>
+        <input
+                name="newdescription"
+                th:value="${item.description}"
+                class="form-control"
+                type="text">
 
-     <div class="mb-3">
-         <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
-     </div>
+        <input
+                name="newlongerdescription"
+                th:value="${item.longerdescription}"
+                class="form-control"
+                type="text">
 
-     <button class="btn btn-primary" type="submit">Log In</button>
+        <input
+                name="ticketPrice"
+                th:value="${item.ticketPrice}"
+                class="form-control"
+                type="text">
 
- </form>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
 
 
 

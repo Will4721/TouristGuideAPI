@@ -99,19 +99,34 @@ public class TouristController {
         return "redirect:/attractions";
     }
 
-    @PostMapping("/attractions/update")
-    @ResponseBody
+    @PostMapping("/attractions/update/{name}")
     public String updateAttraction(
-            @RequestParam int pick,
-            @RequestParam String name,
+            @PathVariable String name,
             @RequestParam String newname,
-            @RequestParam String newdescription) {
+            @RequestParam String newdescription,
+            @RequestParam String newlongerdescription,
+            @RequestParam double ticketPrice,
+            ModelMap model) {
 
-        boolean updated = touristService.updateAttraction(pick, name, newname, newdescription);
+        boolean updated = touristService.updateAttraction(
+                name,
+                newname,
+                newdescription,
+                newlongerdescription,
+                ticketPrice
+        );
+
         if (updated) {
-            return "Getall";
+            return "redirect:/attractions";
         }
-        return "Getall";
+
+        return apology(
+                model,
+                "I dont know what you did but stop",
+                400,
+                "Error_400",
+                "I dont know what you did but stop"
+        );
     }
 
     @PostMapping("/attractions/delete/{name}")
@@ -122,6 +137,26 @@ public class TouristController {
             return new ResponseEntity<>("Attraktion slettet: " + name, HttpStatus.OK);
         }
         return new ResponseEntity<>("Kunne ikke finde attraktionen: " + name, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/attractions/update/{name}")
+    public String showUpdatePage(@PathVariable String name, ModelMap model) {
+
+        TouristAttraction item = touristService.getAttractionByName(name);
+
+        if (item == null) {
+            return apology(
+                    model,
+                    "I dont know what you did but stop",
+                    400,
+                    "Error_400",
+                    "I dont know what you did but stop"
+            );
+        }
+
+        model.addAttribute("item", item);
+
+        return "opdater";
     }
 
     private String apology(ModelMap model, String message, int statusCode,String topText,String bottomText) {

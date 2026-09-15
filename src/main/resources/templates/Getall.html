@@ -67,6 +67,9 @@
                             <a class="linking"    th:text="${item.description}">Forlystelsespark i København</a>
                         </td>
                         <td>
+                            <form th:action="@{/attractions/update/{name}(name=${item.name})}" th:method="get">
+                                <button class="btn btn-primary" type="submit">Opdater</button>
+                            </form>
                             <form th:action="@{/attractions/delete/{name}(name=${item.name})}" th:method="post">
                             <button class="btn btn-primary" type="submit">Slet</button>
                             </form>

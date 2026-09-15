@@ -196,5 +196,30 @@ public class TouristRepository {
         return false;
     }
 
+    public boolean update(String name,String description,String longerdescription,double ticket_price) {
+        //vores query
+        String sql = "UPDATE attraction SET name = ?, description = ?, longerdescription=?,ticket_price=? WHERE name = ?";
+        //vi connecter til DB
+        try (Connection connection = connect();
+             //vi skriver vores statement men executer det ikke endnu
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            //vi sætter variablen name in i første spørgsmåls tegn i query
+            statement.setString(1, name);
+            statement.setString(2, description);
+            statement.setString(3, longerdescription);
+            statement.setString(4, String.valueOf(ticket_price));
+            statement.setString(5, name);
+            //vi tjekker hvor mange linjer bliver slettet
+            int rowsUpdated = statement.executeUpdate();
+            //vi returner hvor mange blev slettet burde bare være 1 i vores tilfælde
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 
 }
