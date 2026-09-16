@@ -28,17 +28,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/about.html}">About</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions/Tivoli}">Find</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions}">Attractions</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/login}">login/register</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3"
+                                            th:href="@{/about.html}">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3"
+                                            th:href="@{/attractions/Tivoli}">Find</a></li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions}">Attractions</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/login}">login/register</a>
+                    </li>
                 </ul>
 
                 <!-- Søgebar -->
                 <form class="d-flex mt-2 mt-lg-0" style="max-width: 350px;">
                     <div class="input-group">
                         <input class="form-control" type="search" id="searchBar" placeholder="Search" required>
-                        <button id="searchBtn" class="btn btn-outline-success bg-white text-dark" type="button">Search</button>
+                        <button id="searchBtn" class="btn btn-outline-success bg-white text-dark" type="button">Search
+                        </button>
                     </div>
                 </form>
             </div>
@@ -50,34 +55,48 @@
 <h1>tilføj ny turistattraktion</h1>
 
 
-<form action="/attractions/add" method="post">
+<form th:action="@{/attractions/add}" method="post">
 
-    <label for="id">ID:</label>
-    <input type="number" id="id" name="id" required>
+    <div class ="add-Input">
+        <label for="id">ID:</label>
+        <input type="number" id="id" name="id" required>
 
-    <label for="name">Navn:</label>
-    <input type="text" id="name" name="name" required>
+        <br>
 
-    <p>mangler mere her</p>
+        <label for="name">Navn:</label>
+        <input type="text" id="name" name="name" required>
 
+        <br>
 
+        <label for="description">Beskrivelse:</label>
+        <input type="text" id="description" name="description" required>
 
+        <br>
+
+        <label for="longerdescription">Lang beskrivelse:</label>
+        <textarea id="longerdescription" name="longerdescription" rows="5" required> </textarea>
+
+        <br>
+
+        <label for="ticketPrice">Billetpris:</label>      <!-- step = 0,01 gør at man kan ændre prisen med 0,01 ad gangen -->
+        <input type="number" id="ticketPrice" name="ticketPrice" min="0" step="0,01" required>
+
+        <button type="submit">Tilføj turistattraktion</button>
+    </div>
 </form>
+
 
 <footer>
     <nav class="navbar navbar-expand-lg navbar-light footer" style="background-color: #01935a;">
         <div class="container-fluid">
             <footer>
                 <p class="nav-link text-light text-center px-3">Author: William Victor</p>
-                <p><a class="nav-link text-light text-center px-3" >William@example.com</a></p>
+                <p><a class="nav-link text-light text-center px-3">William@example.com</a></p>
             </footer>
         </div>
     </nav>
 </footer>
 </body>
-
-
-
 
 
 </html>
