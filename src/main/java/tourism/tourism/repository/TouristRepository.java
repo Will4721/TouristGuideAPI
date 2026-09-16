@@ -226,32 +226,32 @@ public class TouristRepository {
     public boolean updateTags(int attractionId, List<String> selectedTagNames) {
         String deleteSql = "DELETE FROM attraction_tags WHERE attraction_id = ?";
 
-        // Look up query to map the text name to its ID
+
         String findTagIdSql = "SELECT id FROM tags WHERE tag_name = ?";
         String insertSql = "INSERT INTO attraction_tags (attraction_id, tag_id) VALUES (?, ?)";
 
         try (Connection connection = connect()) {
             connection.setAutoCommit(false);
 
-            // 1. Clear out old associations
+
             try (PreparedStatement deleteStatement = connection.prepareStatement(deleteSql)) {
                 deleteStatement.setInt(1, attractionId);
                 deleteStatement.executeUpdate();
             }
 
-            // 2. Map names to IDs and insert them
+
             if (selectedTagNames != null && !selectedTagNames.isEmpty()) {
                 try (PreparedStatement findStatement = connection.prepareStatement(findTagIdSql);
                      PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
 
                     for (String tagName : selectedTagNames) {
-                        // Find the tag ID for this text string
+
                         findStatement.setString(1, tagName);
                         try (ResultSet rs = findStatement.executeQuery()) {
                             if (rs.next()) {
                                 int tagId = rs.getInt("id");
 
-                                // Insert the matched IDs into your join table
+
                                 insertStatement.setInt(1, attractionId);
                                 insertStatement.setInt(2, tagId);
                                 insertStatement.addBatch();
@@ -274,17 +274,11 @@ public class TouristRepository {
     public List<String> getTags(){
         String sql = "SELECT * FROM tags";
 
-
-        // Vi bruger query() med en ResultSetExtractor til at samle dataene
         return db.query(sql, resultSet -> {
             List<String> tags = new ArrayList<>();
 
-            // Loop igennem alle rækkerne fra databasen
             while (resultSet.next()) {
-                // Første gang vi looper, bygger vi selve attraktionen
 
-
-                // Hver række indeholder et nyt tag for denne attraktion
                 String tagName = resultSet.getString("tag_name");
                 if (tagName != null) {
                     tags.add(tagName);
