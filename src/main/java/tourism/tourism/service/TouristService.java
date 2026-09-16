@@ -48,6 +48,7 @@ public class TouristService {
     public boolean updateAttraction( String currentName, String newName, String newDescription,String newlongerdescription,double ticketPrice) {
         TouristAttraction item = touristRepository.findByName(currentName);
         boolean updated = touristRepository.update(newName,newDescription,newlongerdescription,ticketPrice);
+
         if (item == null) {
             return false;
         }
@@ -56,9 +57,14 @@ public class TouristService {
         }
         return true;
     }
-    public boolean updateTicketPrice(String name, Double ticketPrice) {
-        //TODO du returnere metoden du bruger
-        //return touristRepository.updateTicketPrice(name, ticketPrice);
-        return true;
+
+
+    public List<String> getAllTags(){
+        List<String> tags = touristRepository.getTags();
+        return tags;
+    }
+    public boolean updatedTags(String currentName, List<String> selectedTags){
+        TouristAttraction item = touristRepository.findByName(currentName);
+        return touristRepository.updateTags(item.getId(), selectedTags);
     }
 }

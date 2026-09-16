@@ -27,6 +27,14 @@ public class TouristAttraction {
         this.longerdescription = longerdescription;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public TouristAttraction(int id, String name, String description, String longerdescription, Double ticketPrice){
         this.id = id;
         this.name = name;

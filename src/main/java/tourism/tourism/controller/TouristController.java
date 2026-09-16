@@ -9,6 +9,7 @@ import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.service.TouristService;
 import org.springframework.ui.ModelMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -106,6 +107,7 @@ public class TouristController {
             @RequestParam String newdescription,
             @RequestParam String newlongerdescription,
             @RequestParam double ticketPrice,
+            @RequestParam(required = false) List<String> tags,
             ModelMap model) {
 
         boolean updated = touristService.updateAttraction(
@@ -117,6 +119,13 @@ public class TouristController {
         );
 
         if (updated) {
+
+            if (tags == null) {
+                tags = new ArrayList<>();
+            }
+
+            touristService.updatedTags(newname, tags);
+
             return "redirect:/attractions";
         }
 
@@ -143,6 +152,7 @@ public class TouristController {
     public String showUpdatePage(@PathVariable String name, ModelMap model) {
 
         TouristAttraction item = touristService.getAttractionByName(name);
+        List<String> tags = touristService.getAllTags();
 
         if (item == null) {
             return apology(
@@ -155,6 +165,7 @@ public class TouristController {
         }
 
         model.addAttribute("item", item);
+        model.addAttribute("tags",tags);
 
         return "opdater";
     }
