@@ -1,59 +1,81 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
-    <title>Tilføj Turistattraktion</title>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"></script>
-    <link href="/styles.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+          crossorigin="anonymous"></script>
+  <link href="/styles.css" rel="stylesheet">
+  <title>add</title>
 
 </head>
-
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
+<main>
+
+  <div class="container text-center my-4" style="max-width: 600px;">
 
 
-<h1>tilføj ny turistattraktion</h1>
+    <h2 class="mb-4">Update Attraction Details</h2>
+
+    <form th:action="@{/attractions/add}" method="post">
+      <div class="mb-3">
+        <input
+                name="newname"
+                placeholder="name"
+                class="form-control mx-auto w-auto"
+                type="text">
+      </div>
+      <div class="mb-3">
+        <input
+                name="newdescription"
+                placeholder="description"
+                class="form-control mx-auto w-auto"
+                type="text">
+      </div>
+      <div class="mb-3">
+        <input
+                name="newlongerdescription"
+                placeholder="longerdescription"
+                class="form-control mx-auto w-auto"
+                type="text">
+      </div>
+      <div class="mb-3">
+        <input
+                name="ticketPrice"
+                placeholder="ticketPrice"
+                class="form-control mx-auto w-auto"
+                type="text">
+      </div>
 
 
-<form th:action="@{/attractions/add}" method="post">
+      <div class="d-flex flex-wrap justify-content-center gap-3 mb-4 mx-auto" style="max-width: 450px;">
+        <div th:each="tag, status : ${tags}" class="form-check">
+          <input class="form-check-input"
+                 type="checkbox"
+                 name="tags"
+                 th:value="${tag}"
+                 th:id="'tag-' + ${status.index}">
 
-    <div class ="add-Input">
-        <label for="id">ID:</label>
-        <input type="number" id="id" name="id" required>
-
-        <br>
-
-        <label for="name">Navn:</label>
-        <input type="text" id="name" name="name" required>
-
-        <br>
-
-        <label for="description">Beskrivelse:</label>
-        <input type="text" id="description" name="description" required>
-
-        <br>
-
-        <label for="longerdescription">Lang beskrivelse:</label>
-        <textarea id="longerdescription" name="longerdescription" rows="5" required> </textarea>
-
-        <br>
-
-        <label for="ticketPrice">Billetpris:</label>      <!-- step = 0,01 gør at man kan ændre prisen med 0,01 ad gangen -->
-        <input type="number" id="ticketPrice" name="ticketPrice" min="0" step="0,01" required>
-
-        <button type="submit">Tilføj turistattraktion</button>
-    </div>
-</form>
+          <label class="form-check-label"
+                 th:for="'tag-' + ${status.index}"
+                 th:text="${tag}">
+            Tag Name Placeholder
+          </label>
+        </div>
 
 
+        <div class="mb-3">
+          <button class="btn btn-primary px-4" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
-
-
 </html>
