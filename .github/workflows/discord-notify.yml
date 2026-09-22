@@ -1,0 +1,58 @@
+name: Discord notifikation ved push
+
+on: [push]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Hent ændrede filer
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD | tr '\n' ', ' | sed 's/,$//')
+          echo "files=$CHANGED" >> $GITHUB_OUTPUT
+
+      - name: Send besked til Discord
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOKK }}
+        run: |
+          curl -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"Nyt push til TouristGuideAPI-projektet\",
+                \"color\": 3066993,
+                \"fields\": [
+                  {
+                    \"name\": \"Pushet af\",
+                    \"value\": \"${{ github.actor }}\",
+                    \"inline\": true
+                  },
+                  {
+                    \"name\": \"Branch\",
+                    \"value\": \"${{ github.ref_name }}\",
+                    \"inline\": true
+                  },
+                  {
+                    \"name\": \"Commit besked\",
+                    \"value\": \"${{ github.event.head_commit.message }}\"
+                  },
+                  {
+                    \"name\": \"Ændrede filer\",
+                    \"value\": \"${{ steps.changed.outputs.files }}\"
+                  },
+                  {
+                    \"name\": \"Se commit\",
+                    \"value\": \"${{ github.event.head_commit.url }}\"
+                  }
+                ],
+                \"footer\": {
+                  \"text\": \"Pushet d. ${{ github.event.head_commit.timestamp }}\"
+                }
+              }]
+            }"
