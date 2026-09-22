@@ -47,6 +47,11 @@ public class TouristController {
         return "register";
     }
 
+    @GetMapping({"/about", "/about.html"})
+    public String getAbout() {
+        return "about";
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam(required = false) String username, @RequestParam(required = false) String password, HttpSession session, ModelMap model){
         if(touristService.checkLogin(username,password,session,model) == 1) {
