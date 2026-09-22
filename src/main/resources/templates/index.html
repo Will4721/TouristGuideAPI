@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -15,8 +15,7 @@
 </head>
 
 <body>
-<header id="mainheader">
-</header>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <main>
     <div class="mx-5 mt-3">
         <div class="row">
@@ -49,28 +48,24 @@
     </div>
 
 </main>
-<footer id = "footerbottom">
-</footer>
+<div th:replace="~{fragments/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
 <script>
-    $("#footerbottom").load("_footer.html")
-    $("#mainheader").load("_header.html", function() {
-        const searchBtn = document.getElementById("searchBtn");
-        const searchBar = document.getElementById("searchBar");
+    const searchBtn = document.getElementById("searchBtn");
+    const searchBar = document.getElementById("searchBar");
 
-        if (searchBtn) {
-            searchBtn.addEventListener("click", function(event) {
-                // Stop the standard form submission layout
-                event.preventDefault();
+    if (searchBtn) {
+        searchBtn.addEventListener("click", function(event) {
+            // Stop the standard form submission layout
+            event.preventDefault();
 
-                const queryValue = searchBar.value.trim();
-                if (!queryValue) return;
+            const queryValue = searchBar.value.trim();
+            if (!queryValue) return;
 
-                // Redirects the entire browser page to: /attractions/Tivoli
-                window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
-            });
-        }
-    });
+            // Redirects the entire browser page to: /attractions/Tivoli
+            window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
+        });
+    }
 </script>
 </body>
 </html>

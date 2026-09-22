@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -9,8 +9,7 @@
     <title>My Webpage</title>
 </head>
 <body>
-<header id="mainheader">
-</header>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <main>
 
     <h1>Om TouristGuide</h1>
@@ -123,28 +122,24 @@
 
 
 
-<footer id = "footerbottom" >
-</footer>
+<div th:replace="~{fragments/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
 <script>
-    $("#footerbottom").load("_footer.html")
-    $("#mainheader").load("_header.html", function() {
-        const searchBtn = document.getElementById("searchBtn");
-        const searchBar = document.getElementById("searchBar");
+    const searchBtn = document.getElementById("searchBtn");
+    const searchBar = document.getElementById("searchBar");
 
-        if (searchBtn) {
-            searchBtn.addEventListener("click", function(event) {
-                // Stop the standard form submission layout
-                event.preventDefault();
+    if (searchBtn) {
+        searchBtn.addEventListener("click", function(event) {
+            // Stop the standard form submission layout
+            event.preventDefault();
 
-                const queryValue = searchBar.value.trim();
-                if (!queryValue) return;
+            const queryValue = searchBar.value.trim();
+            if (!queryValue) return;
 
-                // Redirects the entire browser page to: /attractions/Tivoli
-                window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
-            });
-        }
-    });
+            // Redirects the entire browser page to: /attractions/Tivoli
+            window.location.href = `/attractions/${encodeURIComponent(queryValue)}`;
+        });
+    }
 </script>
 </body>
 </html>

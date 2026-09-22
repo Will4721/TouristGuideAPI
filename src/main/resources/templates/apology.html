@@ -13,36 +13,7 @@
 
 </head>
 <body>
-<header id="mainheader">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #01935a;">
-        <div class="container-fluid">
-
-            <img th:src="@{/images/img.png}" class="navbar-image">
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" href="about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions/Tivoli}">Find</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/attractions}">Attractions</a></li>
-                    <li class="nav-item"><a class="nav-link text-light text-center px-3" th:href="@{/login}">login/register</a></li>
-                </ul>
-
-                <!-- Søgebar -->
-                <form class="d-flex mt-2 mt-lg-0" style="max-width: 350px;">
-                    <div class="input-group">
-                        <input class="form-control" type="search" id="searchBar" placeholder="Search" required>
-                        <button id="searchBtn" class="btn btn-outline-success bg-white text-dark" type="button">Search</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </nav>
-</header>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <main>
     <div class="mx-5 mt-3">
     <div class="row align-items-center">
@@ -53,15 +24,6 @@
     </div>
     </div>
 </main>
-<footer>
-    <nav class="navbar navbar-expand-lg navbar-light footer" style="background-color: #01935a;">
-        <div class="container-fluid">
-            <footer>
-                <p class="nav-link text-light text-center px-3">Author: William Victor</p>
-                <p><a class="nav-link text-light text-center px-3" >William@example.com</a></p>
-            </footer>
-        </div>
-    </nav>
-</footer>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
