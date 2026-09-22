@@ -47,9 +47,16 @@ public class TouristController {
         return "register";
     }
 
-    @GetMapping({"/about", "/about.html"})
+    @GetMapping("/about")
     public String getAbout() {
         return "about";
+    }
+
+    @GetMapping("/add")
+    public String getAdd(ModelMap model) {
+        List<String> tags = touristService.getAllTags();
+        model.addAttribute("tags",tags);
+        return "add";
     }
 
     @PostMapping("/login")
@@ -174,6 +181,17 @@ public class TouristController {
         model.addAttribute("tags",tags);
 
         return "opdater";
+    }
+
+    @GetMapping("/error")
+    public String error(ModelMap model){
+        return apology(
+                model,
+                "I dont know what you did but stop",
+                400,
+                "Error_400",
+                "I dont know what you did but stop"
+        );
     }
 
     private String apology(ModelMap model, String message, int statusCode,String topText,String bottomText) {
