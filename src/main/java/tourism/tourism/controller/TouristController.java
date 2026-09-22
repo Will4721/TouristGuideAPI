@@ -107,9 +107,13 @@ public class TouristController {
     }
 
     @PostMapping("/attractions/add")
-    public String addAttraction(@RequestParam int id, @RequestParam String name, @RequestParam
-    String description, @RequestParam String longerdescription,@RequestParam double ticketPrice) {
-        touristService.addAttraction(id, name, description,longerdescription,ticketPrice);
+    public String addAttraction(@RequestParam String name, @RequestParam String description, 
+                                @RequestParam String longerdescription, @RequestParam double ticketPrice,
+                                @RequestParam(required = false) List<String> tags) {
+        if (tags == null) {
+            tags = new ArrayList<>();
+        }
+        touristService.addAttraction(name, description, longerdescription, ticketPrice, tags);
         return "redirect:/attractions";
     }
 

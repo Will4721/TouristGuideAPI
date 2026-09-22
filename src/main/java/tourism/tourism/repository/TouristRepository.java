@@ -157,16 +157,18 @@ public class TouristRepository {
     public void save(TouristAttraction attraction) {
         //vores query
         String sql = """
-                INSERT INTO attraction (name, description)
-                VALUES (?, ?)
+                INSERT INTO attraction (name, description, longerdescription, ticket_price)
+                VALUES (?, ?, ?, ?)
                 """;
         //vi connecter til DB
         try (Connection connection = connect();
              //vi skriver vores statement men executer det ikke endnu
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            //vi sætter variablenerne  name og description ind i første og anden spørgsmåls tegn i query
+            //vi sætter variablenerne i query
             statement.setString(1, attraction.getName());
             statement.setString(2, attraction.getDescription());
+            statement.setString(3, attraction.getLongerdescription());
+            statement.setDouble(4, attraction.getTicketPrice());
 
             statement.executeUpdate();
 

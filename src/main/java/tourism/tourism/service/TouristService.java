@@ -36,9 +36,12 @@ public class TouristService {
         return touristRepository.findByName(name);
     }
 
-    public void addAttraction(int id, String name, String description,String longerdescription,double ticketPrice) {
-        TouristAttraction attraction = new TouristAttraction(id, name, description,longerdescription,ticketPrice);
+    public void addAttraction(String name, String description,String longerdescription,double ticketPrice, List<String> tags) {
+        TouristAttraction attraction = new TouristAttraction(0, name, description,longerdescription,ticketPrice);
         touristRepository.save(attraction);
+        if (tags != null && !tags.isEmpty()) {
+            updatedTags(name, tags);
+        }
     }
 
     public boolean removeAttraction(String name) {
