@@ -15,14 +15,14 @@
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <main>
-<form action="#" th:action="@{/register}" th:object="${register}" method="post">
+<form action="#" th:action="@{/register}" th:object="${register}" method="post" class="register-form">
     <div class="mb-3">
         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username"  type="text">
     </div>
     <div>
         <input class="form-control mx-auto w-auto" name="password" type="password">
     </div>
-    <button class="btn btn-primary" type="submit">Log In</button>
+    <button class="login-register" type="submit">Register</button>
 </form>
 </main>
 <div th:replace="~{fragments/footer :: footer}"></div>
