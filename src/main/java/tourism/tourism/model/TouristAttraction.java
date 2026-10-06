@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TouristAttraction {
-    private int id;
+    private final int id;
     private String name;
     private String description;
     private String longerdescription;
@@ -29,10 +29,6 @@ public class TouristAttraction {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public TouristAttraction(int id, String name, String description, String longerdescription, Double ticketPrice){
