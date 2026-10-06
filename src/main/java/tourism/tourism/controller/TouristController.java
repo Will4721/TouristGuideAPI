@@ -206,6 +206,15 @@ public class TouristController {
 
         return "apology";
     }
+
+    @GetMapping("/Route")
+    public String route(ModelMap modelMap){
+        List<TouristAttraction> attractions = touristService.getAllAttractions();
+        modelMap.addAttribute("attractions", attractions);
+        return "checkroute";
+    }
+
+
 }
 
 

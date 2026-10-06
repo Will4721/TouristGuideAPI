@@ -6,6 +6,9 @@ import org.springframework.ui.ModelMap;
 import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.repository.TouristRepository;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,4 +73,44 @@ public class TouristService {
         TouristAttraction item = touristRepository.findByName(currentName);
         return touristRepository.updateTags(item.getId(), selectedTags);
     }
-}
+
+        public List<String> getAttractionsFromCProgram(String startLocation, String endLocation) {
+            List<String> outputLines = new ArrayList<>();
+
+            try {
+                // 1. Path to your compiled C executable
+                // If you compiled it using IntelliJ's CMake, it's usually in cmake-build-debug
+                String exePath = "bin/my_c_program.exe";
+
+                // 2. Build the command: TouristGuide.exe "Tivoli" "Nyhavn"
+                ProcessBuilder processBuilder = new ProcessBuilder(exePath, startLocation, endLocation);
+
+                // (Optional) Set working directory if your C program needs to find files relative to the root
+                // processBuilder.directory(new File("."));
+                // 3. Start the C program
+                Process process = processBuilder.start();
+                // 4. Read the output (System.out) from the C program
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    // Here you can capture the printed output and filter it
+                    System.out.println("C Program says: " + line);
+
+                    // For example, you could ignore lines that start with "Pass 1" or "Searching"
+                    // and only add the actual attraction names to a list to return to your controller.
+                    outputLines.add(line);
+                }
+
+                // 5. Wait for the C program to finish
+                int exitCode = process.waitFor();
+                System.out.println("C program finished with exit code: " + exitCode);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return outputLines;
+        }
+    }
+

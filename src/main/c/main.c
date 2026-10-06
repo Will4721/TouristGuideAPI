@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
     }
 
     FILE *file = fopen(filename, "r");
+    if (file == NULL) file = fopen("../src/main/resources/test_map.osm", "r");
     if (file == NULL) file = fopen("../src/main/resources/copenhagen.osm", "r");
     if (file == NULL) {
         printf("Error: Could not open file %s\n", filename);
