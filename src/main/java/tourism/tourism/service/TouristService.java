@@ -24,7 +24,7 @@ public class TouristService {
     }
 
     public int checkLogin(String username, String password, HttpSession session , ModelMap model){
-        return touristRepository.loginCheck(username,password,session,model);
+        return touristRepository.loginCheck(username,password,session);
     }
 
     public int registerLogin(String username, String password, HttpSession session , ModelMap model){

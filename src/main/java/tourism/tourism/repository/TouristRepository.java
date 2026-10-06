@@ -2,13 +2,11 @@ package tourism.tourism.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.ModelMap;
 import tourism.tourism.model.TouristAttraction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import jakarta.servlet.http.HttpSession;
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +16,10 @@ import java.util.Map;
 public class TouristRepository {
     @Autowired
     private JdbcTemplate db;
-    private final String url = "jdbc:sqlite:Attractions.db";
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Connection connect() throws SQLException {
+        String url = "jdbc:sqlite:Attractions.db";
         return DriverManager.getConnection(url);
     }
 
@@ -58,7 +56,7 @@ public class TouristRepository {
         return attractions;
     }
 
-    public int loginCheck(String username, String password,HttpSession session,ModelMap model){
+    public int loginCheck(String username, String password,HttpSession session){
         if(username == null || username.trim().isEmpty()){
             System.out.println("username");
             return -1;

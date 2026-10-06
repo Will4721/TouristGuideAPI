@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6">
+  <node id="-1" lat="55.6736" lon="12.5681"><tag k="name" v="Tivoli"/><tag k="tourism" v="theme_park"/></node>
+  <node id="-2" lat="55.6929" lon="12.5993"><tag k="name" v="Den Lille Havfrue"/><tag k="tourism" v="artwork"/></node>
+  <node id="-3" lat="55.7029" lon="12.5724"><tag k="name" v="Parken"/><tag k="tourism" v="stadium"/></node>
+  <node id="-4" lat="55.9691" lon="12.5434"><tag k="name" v="Lousiana"/><tag k="tourism" v="museum"/></node>
+  <node id="-5" lat="55.6719" lon="12.5220"><tag k="name" v="Københavns Zoo"/><tag k="tourism" v="zoo"/></node>
+  <node id="-6" lat="55.6736" lon="12.5996"><tag k="name" v="Christiania"/><tag k="tourism" v="attraction"/></node>
+  <node id="-7" lat="55.6814" lon="12.5759"><tag k="name" v="Rundetårn"/><tag k="tourism" v="viewpoint"/></node>
+  <node id="-8" lat="55.6795" lon="12.5894"><tag k="name" v="Nyhavn"/><tag k="tourism" v="attraction"/></node>
+  <node id="-9" lat="55.6762" lon="12.5806"><tag k="name" v="Christiansborg Slot"/><tag k="tourism" v="museum"/></node>
+  <node id="-10" lat="55.6841" lon="12.5933"><tag k="name" v="Amalienborg Slot"/><tag k="tourism" v="museum"/></node>
+</osm>

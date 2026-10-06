@@ -124,4 +124,23 @@ button, input[type="submit"] {
     height: auto;
 }
 
+.login-register {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1%;
+        Text-align: center;
+        width: 100px;
+}
+
+.login-form {
+    margin-top: 2%;
+}
+
+.register-form {
+    margin-top: 2.2%;
+
+}
+
+
 /*
