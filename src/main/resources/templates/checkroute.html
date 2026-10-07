@@ -47,8 +47,24 @@
 
             <div class="col-12 col-lg-6">
                 <div class="text-lg pt-2 font-medium">
-                    <p>In here you will find useful information about turism in copenhagen. You can find details about landmarks across the city
+                    <p>Make a route that passes by Tourist attractions just type in you start and end destination
                         &nbsp;</p>
+                    <div>
+                        <form action="/route" method="post" class="login-form">
+                            <div class="mb-3">
+                                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="FirstLocal" placeholder="First Loaction" type="text">
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control mx-auto w-auto" name="LastLocal" placeholder="Last Location" type="text">
+                            </div>
+                            <button class="login-register" type="submit">Find route</button>
+                        </form>
+                    </div>
+                    <div th:each="place : ${result}">
+                        <p th:text="${place}"></p>
+                    </div>
+
+
                 </div>
             </div>
         </div>

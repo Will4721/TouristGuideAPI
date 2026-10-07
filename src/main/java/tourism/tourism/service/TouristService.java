@@ -79,11 +79,11 @@ public class TouristService {
 
             try {
                 // 1. Path to your compiled C executable
-                // If you compiled it using IntelliJ's CMake, it's usually in cmake-build-debug
-                String exePath = "bin/my_c_program.exe";
+                // 1. Path to your compiled C executable in bin/
+                String exePath = "bin/TouristGuide.exe";
 
-                // 2. Build the command: TouristGuide.exe "Tivoli" "Nyhavn"
-                ProcessBuilder processBuilder = new ProcessBuilder(exePath, startLocation, endLocation);
+                // 2. Build the command: TouristGuide.exe "Tivoli" "Nyhavn" (add "small" as 3rd arg for instant testing)
+                ProcessBuilder processBuilder = new ProcessBuilder(exePath, startLocation, endLocation, "small");
 
                 // (Optional) Set working directory if your C program needs to find files relative to the root
                 // processBuilder.directory(new File("."));
@@ -95,11 +95,16 @@ public class TouristService {
 
                 while ((line = reader.readLine()) != null) {
                     // Here you can capture the printed output and filter it
-                    System.out.println("C Program says: " + line);
+                    String target = "v=\"";
+                    if(line.equals(target)){
+                        continue;
+                    }
+                    String replacement = "";
+                    String processed = line.replace(target, replacement);
 
                     // For example, you could ignore lines that start with "Pass 1" or "Searching"
                     // and only add the actual attraction names to a list to return to your controller.
-                    outputLines.add(line);
+                    outputLines.add(processed);
                 }
 
                 // 5. Wait for the C program to finish

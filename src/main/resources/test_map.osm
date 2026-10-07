@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <osm version="0.6">
+  <!-- Original Database Attractions -->
   <node id="-1" lat="55.6736" lon="12.5681"><tag k="name" v="Tivoli"/><tag k="tourism" v="theme_park"/></node>
   <node id="-2" lat="55.6929" lon="12.5993"><tag k="name" v="Den Lille Havfrue"/><tag k="tourism" v="artwork"/></node>
-  <node id="-3" lat="55.7029" lon="12.5724"><tag k="name" v="Parken"/><tag k="tourism" v="stadium"/></node>
+  <node id="-3" lat="55.7029" lon="12.5724"><tag k="name" v="Parken"/><tag k="tourism" v="attraction"/></node>
   <node id="-4" lat="55.9691" lon="12.5434"><tag k="name" v="Lousiana"/><tag k="tourism" v="museum"/></node>
   <node id="-5" lat="55.6719" lon="12.5220"><tag k="name" v="Københavns Zoo"/><tag k="tourism" v="zoo"/></node>
   <node id="-6" lat="55.6736" lon="12.5996"><tag k="name" v="Christiania"/><tag k="tourism" v="attraction"/></node>
@@ -10,4 +11,52 @@
   <node id="-8" lat="55.6795" lon="12.5894"><tag k="name" v="Nyhavn"/><tag k="tourism" v="attraction"/></node>
   <node id="-9" lat="55.6762" lon="12.5806"><tag k="name" v="Christiansborg Slot"/><tag k="tourism" v="museum"/></node>
   <node id="-10" lat="55.6841" lon="12.5933"><tag k="name" v="Amalienborg Slot"/><tag k="tourism" v="museum"/></node>
+
+  <!-- Popular Castles, Palaces & Historic Sites -->
+  <node id="-11" lat="55.6858" lon="12.5773"><tag k="name" v="Rosenborg Slot"/><tag k="tourism" v="museum"/></node>
+  <node id="-12" lat="55.6853" lon="12.5804"><tag k="name" v="Kongens Have"/><tag k="tourism" v="attraction"/></node>
+  <node id="-13" lat="55.6914" lon="12.5953"><tag k="name" v="Kastellet"/><tag k="tourism" v="attraction"/></node>
+  <node id="-14" lat="55.6752" lon="12.5839"><tag k="name" v="Børsen"/><tag k="tourism" v="attraction"/></node>
+  <node id="-15" lat="55.6754" lon="12.5694"><tag k="name" v="Københavns Rådhus"/><tag k="tourism" v="attraction"/></node>
+  <node id="-16" lat="55.6715" lon="12.5262"><tag k="name" v="Frederiksberg Slot"/><tag k="tourism" v="museum"/></node>
+
+  <!-- Famous Churches & Viewpoints -->
+  <node id="-17" lat="55.6847" lon="12.5896"><tag k="name" v="Marmorkirken"/><tag k="tourism" v="attraction"/></node>
+  <node id="-18" lat="55.6728" lon="12.5932"><tag k="name" v="Vor Frelsers Kirke"/><tag k="tourism" v="viewpoint"/></node>
+  <node id="-19" lat="55.6794" lon="12.5733"><tag k="name" v="Vor Frue Kirke"/><tag k="tourism" v="attraction"/></node>
+  <node id="-20" lat="55.6766" lon="12.5835"><tag k="name" v="Holmens Kirke"/><tag k="tourism" v="attraction"/></node>
+
+  <!-- World-Class Museums & Art Galleries -->
+  <node id="-21" lat="55.6725" lon="12.5719"><tag k="name" v="Ny Carlsberg Glyptotek"/><tag k="tourism" v="museum"/></node>
+  <node id="-22" lat="55.6744" lon="12.5748"><tag k="name" v="Nationalmuseet"/><tag k="tourism" v="museum"/></node>
+  <node id="-23" lat="55.6889" lon="12.5786"><tag k="name" v="Statens Museum for Kunst"/><tag k="tourism" v="museum"/></node>
+  <node id="-24" lat="55.6738" lon="12.5794"><tag k="name" v="Thorvaldsens Museum"/><tag k="tourism" v="museum"/></node>
+  <node id="-25" lat="55.6698" lon="12.5273"><tag k="name" v="Cisternerne"/><tag k="tourism" v="museum"/></node>
+  <node id="-26" lat="55.6872" lon="12.5739"><tag k="name" v="Botanisk Have"/><tag k="tourism" v="attraction"/></node>
+  <node id="-27" lat="55.6745" lon="12.5583"><tag k="name" v="Planetarium"/><tag k="tourism" v="attraction"/></node>
+
+  <!-- Squares, Famous Streets & City Life -->
+  <node id="-28" lat="55.6787" lon="12.5758"><tag k="name" v="Strøget"/><tag k="tourism" v="attraction"/></node>
+  <node id="-29" lat="55.6806" lon="12.5862"><tag k="name" v="Kongens Nytorv"/><tag k="tourism" v="attraction"/></node>
+  <node id="-30" lat="55.6761" lon="12.5683"><tag k="name" v="Rådhuspladsen"/><tag k="tourism" v="attraction"/></node>
+  <node id="-31" lat="55.6833" lon="12.5689"><tag k="name" v="Torvehallerne"/><tag k="tourism" v="attraction"/></node>
+  <node id="-32" lat="55.6799" lon="12.5760"><tag k="name" v="Gråbrødretorv"/><tag k="tourism" v="attraction"/></node>
+  <node id="-33" lat="55.6740" lon="12.5290"><tag k="name" v="Frederiksberg Have"/><tag k="tourism" v="attraction"/></node>
+  <node id="-34" lat="55.6908" lon="12.5503"><tag k="name" v="Assistens Kirkegård"/><tag k="tourism" v="attraction"/></node>
+  <node id="-35" lat="55.6869" lon="12.5638"><tag k="name" v="Dronning Louises Bro"/><tag k="tourism" v="attraction"/></node>
+  <node id="-36" lat="55.7001" lon="12.5447"><tag k="name" v="Superkilen"/><tag k="tourism" v="attraction"/></node>
+
+  <!-- Harbor, Culture & Waterfront Icons -->
+  <node id="-37" lat="55.6892" lon="12.5975"><tag k="name" v="Gefionspringvandet"/><tag k="tourism" v="artwork"/></node>
+  <node id="-38" lat="55.6819" lon="12.6006"><tag k="name" v="Operaen"/><tag k="tourism" v="attraction"/></node>
+  <node id="-39" lat="55.6794" lon="12.5936"><tag k="name" v="Skuespilhuset"/><tag k="tourism" v="attraction"/></node>
+  <node id="-40" lat="55.6797" lon="12.5861"><tag k="name" v="Det Kongelige Teater"/><tag k="tourism" v="attraction"/></node>
+  <node id="-41" lat="55.6719" lon="12.5828"><tag k="name" v="Den Sorte Diamant"/><tag k="tourism" v="attraction"/></node>
+  <node id="-42" lat="55.6881" lon="12.6163"><tag k="name" v="CopenHill"/><tag k="tourism" v="viewpoint"/></node>
+  <node id="-43" lat="55.6931" lon="12.6134"><tag k="name" v="Reffen Street Food"/><tag k="tourism" v="attraction"/></node>
+  <node id="-44" lat="55.6787" lon="12.5960"><tag k="name" v="Papirøen"/><tag k="tourism" v="attraction"/></node>
+  <node id="-45" lat="55.6730" lon="12.5900"><tag k="name" v="Christianshavns Kanal"/><tag k="tourism" v="attraction"/></node>
+  <node id="-46" lat="55.6660" lon="12.5320"><tag k="name" v="Carlsberg Byen"/><tag k="tourism" v="attraction"/></node>
+  <node id="-47" lat="55.6685" lon="12.5785"><tag k="name" v="Dansk Arkitektur Center"/><tag k="tourism" v="museum"/></node>
+  <node id="-48" lat="55.6381" lon="12.6556"><tag k="name" v="Den Blå Planet"/><tag k="tourism" v="aquarium"/></node>
 </osm>

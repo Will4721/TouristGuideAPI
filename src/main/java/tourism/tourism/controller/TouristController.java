@@ -214,6 +214,15 @@ public class TouristController {
         return "checkroute";
     }
 
+    @PostMapping("/route")
+    public String routefind(ModelMap modelMap, @RequestParam String FirstLocal, @RequestParam String LastLocal){
+        List<String> result = touristService.getAttractionsFromCProgram(FirstLocal, LastLocal);
+
+        modelMap.addAttribute("result",result);
+        return "checkroute";
+    }
+
+
 
 }
 
