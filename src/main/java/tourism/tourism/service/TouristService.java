@@ -90,7 +90,7 @@ public class TouristService {
                 // 3. Start the C program
                 Process process = processBuilder.start();
                 // 4. Read the output (System.out) from the C program
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), java.nio.charset.StandardCharsets.UTF_8));
                 String line;
 
                 while ((line = reader.readLine()) != null) {

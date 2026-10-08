@@ -1,8 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 int main(int argc, char *argv[]) {
+#ifdef _WIN32
+    // Convert Windows arguments from UTF-16 to UTF-8
+    int wargc;
+    LPWSTR *wargv = CommandLineToArgvW(GetCommandLineW(), &wargc);
+    if (wargv != NULL) {
+        for (int i = 0; i < wargc && i < argc; i++) {
+            int utf8_len = WideCharToMultiByte(CP_UTF8, 0, wargv[i], -1, NULL, 0, NULL, NULL);
+            char *utf8_arg = malloc(utf8_len);
+            WideCharToMultiByte(CP_UTF8, 0, wargv[i], -1, utf8_arg, utf8_len, NULL, NULL);
+            argv[i] = utf8_arg; 
+        }
+        LocalFree(wargv);
+    }
+    SetConsoleOutputCP(CP_UTF8);
+#endif
     if (argc < 3) {
         printf("Error: Please provide at least TWO arguments! (e.g. \"Tivoli\" \"Nyhavn\" [optional: \"small\"|\"large\"])\n");
         return 1;
