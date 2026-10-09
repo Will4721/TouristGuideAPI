@@ -78,36 +78,38 @@ public class TouristService {
             List<String> outputLines = new ArrayList<>();
 
             try {
-                // 1. Path to your compiled C executable
-                // 1. Path to your compiled C executable in bin/
+                //vores precompiled C program i bin
                 String exePath = "bin/TouristGuide.exe";
 
-                // 2. Build the command: TouristGuide.exe "Tivoli" "Nyhavn" (add "small" as 3rd arg for instant testing)
+
+                // vi begynder at lave C programmet men først giver vi den nogle parameter til at bruge inklusiv small som betyder den lille OSM fil
                 ProcessBuilder processBuilder = new ProcessBuilder(exePath, startLocation, endLocation, "small");
 
-                // (Optional) Set working directory if your C program needs to find files relative to the root
-                // processBuilder.directory(new File("."));
-                // 3. Start the C program
+                // vi faktisk starter C programmet her
                 Process process = processBuilder.start();
-                // 4. Read the output (System.out) from the C program
+                // vi læser alle print statements fra C programmet
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), java.nio.charset.StandardCharsets.UTF_8));
                 String line;
-
+                // vi putter 1 linje af gangen ind i line og processer dem
                 while ((line = reader.readLine()) != null) {
-                    // Here you can capture the printed output and filter it
+                    // Stringen med navnet står sådan her "v="Tivoli"
                     String target = "v=\"";
+                    // vi tjekker om vi har fået den linje vi gerne vil have
                     if(line.equals(target)){
+                        // Hvis linjen kun indeholder 'v="' uden noget navn, springer vi den over,
+                        // så vi undgår at tilføje en tom/ugyldig attraktion til listen.
                         continue;
                     }
+
                     String replacement = "";
+                    // vi tager v=" og fjerne den hved at replace den med "" som er igenting
                     String processed = line.replace(target, replacement);
 
-                    // For example, you could ignore lines that start with "Pass 1" or "Searching"
-                    // and only add the actual attraction names to a list to return to your controller.
+                    // her vælger vi hvad der skal vises på siden
                     outputLines.add(processed);
                 }
 
-                // 5. Wait for the C program to finish
+                // vi venter på programmet er færdig
                 int exitCode = process.waitFor();
                 System.out.println("C program finished with exit code: " + exitCode);
 
