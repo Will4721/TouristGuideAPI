@@ -2,38 +2,32 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Inkluderer Windows-specifikke funktioner for at håndtere tegnkodning (æøå)
+
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-/*
- * Dette C-program analyserer en OpenStreetMap (.osm) fil for at finde 
- * turistattraktioner, der ligger geografisk mellem to valgte steder.
- * 
- * Programmet kører i to gennemløb (passes):
- * 1. Først finder det GPS-koordinaterne (bredde- og længdegrad) for start- og slutpunktet.
- * 2. Derefter udregner det en "bounding box" (en firkantet zone) mellem de to punkter
- *    og finder alle andre turistattraktioner, der ligger inden for denne zone.
- */
 int main(int argc, char *argv[]) {
+// vi tjekker om det windows da mac og linux bruger utf-8 som standard
 #ifdef _WIN32
-    // --- LØSNING PÆ ÆØÅ-PROBLEMET PÅ WINDOWS ---
-    // Standard-argumenterne (argv) på Windows bruger et forældet format (ANSI/CP1252),
-    // som ødelægger danske tegn som æ, ø og å, når vi sammenligner med en UTF-8 fil.
-    // Her beder vi Windows om at hente argumenterne i rent Unicode (UTF-16) og 
-    // konverterer dem derefter manuelt til UTF-8, så de matcher tegnene i vores .osm fil.
+    // vi gemmer i en int hvor mange argumenter vi tager imod
     int wargc;
+    // vi henter kommandolinjen som en Unicode(utf-16) og så spilleter vi den op i et array af ord
+    // vi gemmer så resultatet på addresen for wargc
     LPWSTR *wargv = CommandLineToArgvW(GetCommandLineW(), &wargc);
+
+    // vi tjekker om der blev fundet nået
     if (wargv != NULL) {
         for (int i = 0; i < wargc && i < argc; i++) {
-            // Find ud af hvor meget plads vi skal bruge til UTF-8 versionen
+            // Find ud af hvor meget plads vi skal bruge til UTF-8 versionen altså hvor meget ekstra plads der skal være for æøå
             int utf8_len = WideCharToMultiByte(CP_UTF8, 0, wargv[i], -1, NULL, 0, NULL, NULL);
+            // vi bruger så memory allocation til at få den mængde plads vi udregnede
             char *utf8_arg = malloc(utf8_len);
             // Udfør selve konverteringen fra Unicode til UTF-8
             WideCharToMultiByte(CP_UTF8, 0, wargv[i], -1, utf8_arg, utf8_len, NULL, NULL);
             argv[i] = utf8_arg; // Overskriv det gamle ANSI-argument med vores nye UTF-8 argument
         }
+        // vi befrier den hukommelse vi brugte nu da vi er færdig med det
         LocalFree(wargv);
     }
     // Sæt terminalens output til at bruge UTF-8, så Java læser æøå korrekt
