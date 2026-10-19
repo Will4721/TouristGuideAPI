@@ -25,7 +25,7 @@ jobs:
           distribution: 'microsoft'
 
       - name: Compile C program for Linux
-        run: gcc src/main/c/main.c -o src/main/resources/TouristGuide_linux
+        run: gcc -static src/main/c/main.c -o src/main/resources/TouristGuide_linux
 
       - name: Build with Maven
         env:
