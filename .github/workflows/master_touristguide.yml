@@ -24,6 +24,9 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
+      - name: Compile C program for Linux
+        run: gcc src/main/c/main.c -o src/main/resources/TouristGuide_linux
+
       - name: Build with Maven
         env:
           PROD_DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}

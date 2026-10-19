@@ -76,6 +76,31 @@ public class TouristService {
             try {
                 //vores precompiled C program i bin
                 String exePath = "bin/TouristGuide.exe";
+                boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+
+                if (!isWindows) {
+                    java.io.File osmFile = new java.io.File("src/main/resources/test_map.osm");
+                    if (!osmFile.exists()) {
+                        osmFile.getParentFile().mkdirs();
+                        try (java.io.InputStream in = getClass().getResourceAsStream("/test_map.osm")) {
+                            if (in != null) {
+                                java.nio.file.Files.copy(in, osmFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            }
+                        }
+                    }
+
+                    java.io.File linuxBin = new java.io.File("bin/TouristGuide_linux");
+                    if (!linuxBin.exists()) {
+                        linuxBin.getParentFile().mkdirs();
+                        try (java.io.InputStream in = getClass().getResourceAsStream("/TouristGuide_linux")) {
+                            if (in != null) {
+                                java.nio.file.Files.copy(in, linuxBin.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            }
+                        }
+                    }
+                    linuxBin.setExecutable(true);
+                    exePath = linuxBin.getAbsolutePath();
+                }
 
 
                 // vi begynder at lave C programmet men først giver vi den nogle parameter til at bruge inklusiv small som betyder den lille OSM fil
