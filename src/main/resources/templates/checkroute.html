@@ -60,10 +60,11 @@
                             <button class="login-register" type="submit">Find route</button>
                         </form>
                     </div>
+                    <div class="soft-padding">
                     <div th:each="place : ${result}">
                         <p th:text="${place}"></p>
                     </div>
-
+                    </div>
 
                 </div>
             </div>

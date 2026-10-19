@@ -45,7 +45,7 @@ public class TouristRepository {
                 String longerdescription = resultSet.getString("longerdescription");
                 double ticket_price = resultSet.getDouble("ticket_price");
                 // vi adder dem til vores arraylist
-                attractions.add(new TouristAttraction(id, name, description,longerdescription,ticket_price));
+                attractions.add(new TouristAttraction(id, name, description, longerdescription, ticket_price));
             }
 
         } catch (SQLException e) {
@@ -56,15 +56,9 @@ public class TouristRepository {
         return attractions;
     }
 
-    public int loginCheck(String username, String password,HttpSession session){
-        if(username == null || username.trim().isEmpty()){
-            System.out.println("username");
-            return -1;
-        }
-        if(password == null || password.trim().isEmpty()){
-            System.out.println("password");
-            return -1;
-        }
+    public int loginCheck(String username, String password, HttpSession session) {
+        if(!conditionCheck(username,password)) return -1;
+
         String sql = "SELECT * FROM users WHERE username = ?";
         List<Map<String, Object>> rows = db.queryForList(sql, username);
 
@@ -80,23 +74,15 @@ public class TouristRepository {
 
     }
 
-    public int registerCheck(String username, String password,HttpSession session,ModelMap model){
-        System.out.println("repo called"+" "+ username);
+    public int registerCheck(String username, String password, HttpSession session, ModelMap model) {
+        System.out.println("repo called" + " " + username);
 
-        if(username == null || username.trim().isEmpty()){
-            System.out.println("username");
+        if(!conditionCheck(username,password)) return -1;
 
-            return -1;
-        }
-        if(password == null || password.trim().isEmpty()){
-            System.out.println("password");
-
-            return -1;
-        }
         String sql = "SELECT * FROM users WHERE username = ?";
         List<Map<String, Object>> rows = db.queryForList(sql, username);
         String secureHash = passwordEncoder.encode(password);
-        if(rows.isEmpty()){
+        if (rows.isEmpty()) {
             String insert = "INSERT INTO users (username, hash) VALUES (?, ?)";
             db.update(insert, username, secureHash);
             return 1;
@@ -131,7 +117,7 @@ public class TouristRepository {
                     String longerDescription = resultSet.getString("longerdescription");
                     double ticket_price = resultSet.getDouble("ticket_price");
 
-                    attraction = new TouristAttraction(id, attractionName, description, longerDescription,ticket_price);
+                    attraction = new TouristAttraction(id, attractionName, description, longerDescription, ticket_price);
                 }
 
                 // Hver række indeholder et nyt tag for denne attraktion
@@ -197,7 +183,7 @@ public class TouristRepository {
         return false;
     }
 
-    public boolean update(String name,String description,String longerdescription,double ticket_price) {
+    public boolean update(String name, String description, String longerdescription, double ticket_price) {
         //vores query
         String sql = "UPDATE attraction SET name = ?, description = ?, longerdescription=?,ticket_price=? WHERE name = ?";
 
@@ -271,7 +257,7 @@ public class TouristRepository {
         return false;
     }
 
-    public List<String> getTags(){
+    public List<String> getTags() {
         String sql = "SELECT * FROM tags";
 
         return db.query(sql, resultSet -> {
@@ -286,10 +272,22 @@ public class TouristRepository {
             }
 
 
-                return tags;
+            return tags;
 
 
         });
+    }
+
+    private boolean conditionCheck(String username, String password) {
+        if (username == null || username.trim().isEmpty()) {
+            System.out.println("username");
+            return false;
+        }
+        if (password == null || password.trim().isEmpty()) {
+            System.out.println("password");
+            return false;
+        }
+        return true;
     }
 
 }
