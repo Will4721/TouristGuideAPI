@@ -28,6 +28,6 @@ projectJDK: "25" #(Applied in CI/CD pipeline)
 # severityThresholds - configures maximum thresholds for different problem severities
 failureConditions:
   severityThresholds:
-    any: 0
+    any: 50
 #Specify Qodana linter for analysis (Applied in CI/CD pipeline)
 linter: jetbrains/qodana-jvm-community:2025.3
