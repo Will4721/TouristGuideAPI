@@ -23,7 +23,10 @@ public class TouristController {
         this.touristService = touristService;
     }
 
-
+    @GetMapping("/")
+    public String redirect(){
+        return "redirect:/attractions";
+    }
 
 
     @GetMapping("/attractions")
