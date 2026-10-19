@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 @Repository
 public class TouristRepository {
+    // vi laver vores logger så vi kan fange fejl uden at programmet crasher
     Logger logger = LoggerFactory.getLogger(TouristRepository.class);
 
     @Autowired
@@ -22,6 +23,7 @@ public class TouristRepository {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Connection connect() throws SQLException {
+        // vi henter vores connection fra spring datasource så det virker både lokalt og på azure
         return db.getDataSource().getConnection();
     }
 
