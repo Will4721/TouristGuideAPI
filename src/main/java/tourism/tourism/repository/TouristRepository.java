@@ -3,7 +3,6 @@ package tourism.tourism.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.ModelMap;
 import tourism.tourism.model.TouristAttraction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import jakarta.servlet.http.HttpSession;
@@ -11,9 +10,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
 
 @Repository
 public class TouristRepository {
+    Logger logger;
+
     @Autowired
     private JdbcTemplate db;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -50,14 +52,14 @@ public class TouristRepository {
 
         } catch (SQLException e) {
 
-            e.printStackTrace();
+            logger.error("Exception", e);
         }
         // vi sender alle tingene fra arraylist
         return attractions;
     }
 
     public int loginCheck(String username, String password, HttpSession session) {
-        if(!conditionCheck(username,password)) return -1;
+        if(conditionCheck(username, password)) return -1;
 
         String sql = "SELECT * FROM users WHERE username = ?";
         List<Map<String, Object>> rows = db.queryForList(sql, username);
@@ -74,10 +76,10 @@ public class TouristRepository {
 
     }
 
-    public int registerCheck(String username, String password, HttpSession session, ModelMap model) {
+    public int registerCheck(String username, String password) {
         System.out.println("repo called" + " " + username);
 
-        if(!conditionCheck(username,password)) return -1;
+        if(conditionCheck(username, password)) return -1;
 
         String sql = "SELECT * FROM users WHERE username = ?";
         List<Map<String, Object>> rows = db.queryForList(sql, username);
@@ -157,7 +159,8 @@ public class TouristRepository {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Exception", e);
+
         }
     }
 
@@ -177,7 +180,7 @@ public class TouristRepository {
             return rowsDeleted > 0;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Exception", e);
         }
 
         return false;
@@ -203,13 +206,13 @@ public class TouristRepository {
             return rowsUpdated > 0;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Exception", e);
         }
 
         return false;
     }
 
-    public boolean updateTags(int attractionId, List<String> selectedTagNames) {
+    public void updateTags(int attractionId, List<String> selectedTagNames) {
         String deleteSql = "DELETE FROM attraction_tags WHERE attraction_id = ?";
 
 
@@ -249,12 +252,10 @@ public class TouristRepository {
             }
 
             connection.commit();
-            return true;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Exception", e);
         }
-        return false;
     }
 
     public List<String> getTags() {
@@ -281,13 +282,13 @@ public class TouristRepository {
     private boolean conditionCheck(String username, String password) {
         if (username == null || username.trim().isEmpty()) {
             System.out.println("username");
-            return false;
+            return true;
         }
         if (password == null || password.trim().isEmpty()) {
             System.out.println("password");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 }

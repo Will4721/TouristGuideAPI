@@ -37,12 +37,12 @@ public class TouristController {
     }
 
     @GetMapping("/login")
-    public String getLogin(ModelMap modelMap){
+    public String getLogin(){
         return "login";
     }
 
     @GetMapping("/register")
-    public String getRegister(ModelMap modelMap){
+    public String getRegister(){
 
         return "register";
     }
@@ -61,24 +61,24 @@ public class TouristController {
 
     @PostMapping("/login")
     public String login(@RequestParam(required = false) String username, @RequestParam(required = false) String password, HttpSession session, ModelMap model){
-        if(touristService.checkLogin(username,password,session,model) == 1) {
+        if(touristService.checkLogin(username,password,session) == 1) {
             model.addAttribute("username", username);
             return getAllAttractions(model);
         }else{
-            return apology(model, "I dont know what you did but stop", 400, "Error_400", "I dont know what you did but stop");
+            return apology(model);
         }
     }
 
     @PostMapping("/register")
-    public String register(@RequestParam(required = false) String username, @RequestParam(required = false) String password, HttpSession session, ModelMap model){
-        if(touristService.registerLogin(username,password,session,model) == 1) {
+    public String register(@RequestParam(required = false) String username, @RequestParam(required = false) String password, ModelMap model){
+        if(touristService.registerLogin(username,password) == 1) {
             System.out.println("user made");
             model.addAttribute("username", username);
             return "login";
         }else{
             System.out.println("error");
             model.addAttribute("error", "Username already taken");
-            return apology(model, "I dont know what you did but stop", 400, "Error_400", "I dont know what you did but stop");
+            return apology(model);
         }
     }
 
@@ -147,11 +147,7 @@ public class TouristController {
         }
 
         return apology(
-                model,
-                "I dont know what you did but stop",
-                400,
-                "Error_400",
-                "I dont know what you did but stop"
+                model
         );
     }
 
@@ -173,11 +169,7 @@ public class TouristController {
 
         if (item == null) {
             return apology(
-                    model,
-                    "I dont know what you did but stop",
-                    400,
-                    "Error_400",
-                    "I dont know what you did but stop"
+                    model
             );
         }
 
@@ -190,19 +182,15 @@ public class TouristController {
     @GetMapping("/error")
     public String error(ModelMap model){
         return apology(
-                model,
-                "I dont know what you did but stop",
-                400,
-                "Error_400",
-                "I dont know what you did but stop"
+                model
         );
     }
 
-    private String apology(ModelMap model, String message, int statusCode,String topText,String bottomText) {
-        model.addAttribute("message", message);
-        model.addAttribute("status", statusCode);
-        model.addAttribute("top", topText);
-        model.addAttribute("bottom", bottomText);
+    private String apology(ModelMap model) {
+        model.addAttribute("message", "I dont know what you did but stop");
+        model.addAttribute("status", 400);
+        model.addAttribute("top", "Error_400");
+        model.addAttribute("bottom", "I dont know what you did but stop");
 
         return "apology";
     }

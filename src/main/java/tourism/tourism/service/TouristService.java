@@ -2,7 +2,6 @@ package tourism.tourism.service;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 import tourism.tourism.model.TouristAttraction;
 import tourism.tourism.repository.TouristRepository;
 
@@ -10,12 +9,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import org.slf4j.Logger;
 
 
 @Service
 public class TouristService {
-
+    Logger logger;
     private final TouristRepository touristRepository;
 
     public TouristService(TouristRepository touristRepository) {
@@ -26,13 +25,13 @@ public class TouristService {
         return touristRepository.getAll();
     }
 
-    public int checkLogin(String username, String password, HttpSession session , ModelMap model){
+    public int checkLogin(String username, String password, HttpSession session){
         return touristRepository.loginCheck(username,password,session);
     }
 
-    public int registerLogin(String username, String password, HttpSession session , ModelMap model){
+    public int registerLogin(String username, String password){
         System.out.println("service called");
-        return touristRepository.registerCheck(username,password,session,model);
+        return touristRepository.registerCheck(username,password);
     }
 
     public TouristAttraction getAttractionByName(String name) {
@@ -58,20 +57,16 @@ public class TouristService {
         if (item == null) {
             return false;
         }
-        if(!updated){
-            return false;
-        }
-        return true;
+        return updated;
     }
 
 
     public List<String> getAllTags(){
-        List<String> tags = touristRepository.getTags();
-        return tags;
+        return touristRepository.getTags();
     }
-    public boolean updatedTags(String currentName, List<String> selectedTags){
+    public void updatedTags(String currentName, List<String> selectedTags){
         TouristAttraction item = touristRepository.findByName(currentName);
-        return touristRepository.updateTags(item.getId(), selectedTags);
+        touristRepository.updateTags(item.getId(), selectedTags);
     }
 
         public List<String> getAttractionsFromCProgram(String startLocation, String endLocation) {
@@ -114,7 +109,7 @@ public class TouristService {
                 System.out.println("C program finished with exit code: " + exitCode);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Exception", e);
             }
 
             return outputLines;
