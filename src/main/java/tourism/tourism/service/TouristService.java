@@ -10,11 +10,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Service
 public class TouristService {
-    Logger logger;
+    Logger logger = LoggerFactory.getLogger(TouristService.class);
     private final TouristRepository touristRepository;
 
     public TouristService(TouristRepository touristRepository) {

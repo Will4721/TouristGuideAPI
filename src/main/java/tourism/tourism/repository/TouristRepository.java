@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Repository
 public class TouristRepository {
-    Logger logger;
+    Logger logger = LoggerFactory.getLogger(TouristRepository.class);
 
     @Autowired
     private JdbcTemplate db;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Connection connect() throws SQLException {
-        String url = "jdbc:sqlite:Attractions.db";
-        return DriverManager.getConnection(url);
+        return db.getDataSource().getConnection();
     }
 
 
