@@ -70,7 +70,7 @@ class TouristControllerTest {
 
     @Test
     void login() throws Exception{
-        when(touristService.checkLogin(eq("admin"), eq("password123"), any(HttpSession.class), any(ModelMap.class)))
+        when(touristService.checkLogin(eq("admin"), eq("password123"), any(HttpSession.class)))
                 .thenReturn(1);
 
 
@@ -87,7 +87,7 @@ class TouristControllerTest {
 
     @Test
     void register() throws Exception{
-        when(touristService.registerLogin(eq("admin"), eq("password123"), any(HttpSession.class), any(ModelMap.class)))
+        when(touristService.registerLogin(eq("admin"), eq("password123")))
                 .thenReturn(1);
 
         mockMvc.perform(get("/login"))
