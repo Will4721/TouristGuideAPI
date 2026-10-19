@@ -1,9 +1,9 @@
 
-DROP TABLE IF EXISTS attraction_tags;
-DROP TABLE IF EXISTS favorites;
-DROP TABLE IF EXISTS tags;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS attraction;
+-- DROP TABLE IF EXISTS attraction_tags;
+-- DROP TABLE IF EXISTS favorites;
+-- DROP TABLE IF EXISTS tags;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS attraction;
 
 CREATE TABLE attraction (
     id INT AUTO_INCREMENT PRIMARY KEY,
